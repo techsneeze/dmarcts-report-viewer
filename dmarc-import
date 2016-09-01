@@ -1,0 +1,58 @@
+#!/usr/bin/env php
+<?php
+
+error_reporting(E_ALL);
+
+require_once "dmarcts-report-common.php";
+require_once 'getopt.php';
+
+function usage($msg = null) {
+    global $argv;
+    $usage = '';
+    if ($msg) $usage .= "error: ".$msg."\n";
+    $cmd = basename($argv[0]);
+
+    $usage .= <<< USAGE
+{$cmd}: CLI importer for DMARC report viewer.
+Usage: {$cmd} [-f] files
+
+Options:
+    -f: Replace reports
+    -h: Show help
+
+USAGE;
+
+    echo($usage);
+    exit($msg != null ? -1 : 0);
+}
+
+function error($msg) {
+    echo "error: {$msg}\n";
+    exit(-1);
+}
+
+function debug($msg) {
+    echo $msg."\n";
+}
+
+$options = my_getopt($args, 'fh');
+if (empty($args)) usage('missing report file names');
+if ($args[0][0] == "-") usage("unknown option {$args[0]}");
+if (isset($options['h'])) usage();
+
+$replace = isset($options['f']);
+
+foreach ($args as $filename) {
+    if (!file_exists($filename)) {
+        error("file \"{$filename}\" does not exist");
+    }
+
+    debug("Processing file \"{$filename}\"...");
+    $log = array();
+    try {
+        report_importFile($filename, $replace, $log);
+    } catch (Exception $e) {
+        error($e->getMessage());
+    }
+    foreach ($log as $l) debug($l);
+}
