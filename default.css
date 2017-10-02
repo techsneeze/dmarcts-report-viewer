@@ -19,7 +19,9 @@ table.reportlist thead {
 table.reportlist tbody tr:first-child td {
 	padding-top: 10px;
 }
-
+table.reportlist tr.sum {
+	border-top: 1px solid grey;
+}
 
 
 .reportdesc {
