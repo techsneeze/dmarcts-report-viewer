@@ -270,7 +270,7 @@ $where = '';
 if( $dom_select <> '' ) {
   $where = "WHERE domain='" . $mysqli->real_escape_string($dom_select) . "'";
 } 
-$sql = "SELECT report.* , sum(rptrecord.rcount) AS rcount FROM `report` LEFT JOIN rptrecord ON report.serial = rptrecord.serial $where GROUP BY serial ORDER BY mindate,maxdate,org";
+$sql = "SELECT report.* , sum(rptrecord.rcount) AS rcount FROM `report` LEFT JOIN rptrecord ON report.serial = rptrecord.serial $where GROUP BY serial ORDER BY mindate,maxdate,org DESC";
 
 $query = $mysqli->query($sql) or die("Query failed: ".$mysqli->error." (Error #" .$mysqli->errno.")");
 while($row = $query->fetch_assoc()) {
