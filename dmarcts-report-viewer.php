@@ -36,7 +36,7 @@ function format_date($date, $format) {
 	return $answer;
 };
 
-function tmpl_reportList($allowed_reports, $host_lookup = 1,$dom_select = '') {
+function tmpl_reportList($allowed_reports, $host_lookup = 1, $sort_order, $dom_select = '') {
 	$reportlist[] = "";
 	$reportlist[] = "<!-- Start of report list -->";
 
@@ -64,7 +64,7 @@ function tmpl_reportList($allowed_reports, $host_lookup = 1,$dom_select = '') {
 		$reportlist[] =  "      <td class='right'>". format_date($row['maxdate'], $date_output_format). "</td>";
 		$reportlist[] =  "      <td class='center'>". $row['domain']. "</td>";
 		$reportlist[] =  "      <td class='center'>". $row['org']. "</td>";
-		$reportlist[] =  "      <td class='center'><a href='?report=" . $row['serial'] . ( $host_lookup ? "&hostlookup=1" : "&hostlookup=0" ) . ($dom_select == '' ? '' : "&d=$dom_select") . "#rpt". $row['serial'] . "'>". $row['reportid']. "</a></td>";
+		$reportlist[] =  "      <td class='center'><a href='?report=" . $row['serial'] . ( $host_lookup ? "&hostlookup=1" : "&hostlookup=0" ) . ( $sort_order ? "&sortorder=1" : "&sortorder=0" ) . ($dom_select == '' ? '' : "&d=$dom_select") . "#rpt". $row['serial'] . "'>". $row['reportid']. "</a></td>";
 		$reportlist[] =  "      <td class='center'>". number_format($row['rcount']+0,0). "</td>";
 		$reportlist[] =  "    </tr>";
 		$reportsum += $row['rcount'];
@@ -81,7 +81,7 @@ function tmpl_reportList($allowed_reports, $host_lookup = 1,$dom_select = '') {
 	return implode("\n  ",$reportlist);
 }
 
-function tmpl_reportData($reportnumber, $allowed_reports, $host_lookup = 1) {
+function tmpl_reportData($reportnumber, $allowed_reports, $host_lookup = 1, $sort_order) {
 
 	if (!$reportnumber) {
 		return "";
@@ -172,12 +172,12 @@ function tmpl_reportData($reportnumber, $allowed_reports, $host_lookup = 1) {
 function tmpl_page ($body, $reportid, $host_lookup = 1, $sort_order, $dom_select, $domains = array() ) {
 	$html       = array();
 	$url_hswitch = ( $reportid ? "?report=$reportid&hostlookup=" : "?hostlookup=" )
-                . ($host_lookup ? "0" : "1" )
+		. ($host_lookup ? "0" : "1" )
+                . ( "&sortorder=" ) . ($sort_order)
                 . (isset($dom_select) && $dom_select <> "" ? "&d=$dom_select" : "" )
                 ;
-	$url_dswitch = "?hostlookup=" . ($host_lookup ? "1" : "0" ); // drop selected report on domain switch
-	$url_sswitch = "?sortorder=" . ($sort_order ? "0" : "1" );
-
+        $url_dswitch = "?hostlookup=" . ($host_lookup ? "1" : "0" ) . "&sortorder=" . ($sort_order); // drop selected report on domain switch
+        $url_sswitch = "?hostlookup=" . ($host_lookup) . "&sortorder=" . ($sort_order ? "0" : "1" );
 	$html[] = "<!DOCTYPE html>";
 	$html[] = "<html>";
 	$html[] = "  <head>";
@@ -187,7 +187,7 @@ function tmpl_page ($body, $reportid, $host_lookup = 1, $sort_order, $dom_select
 
 	$html[] = "  <body>";
   $html[] = "  <div class='options'>Hostname Lookup is " . ($host_lookup ? "on" : "off" ) . " [<a href=\"$url_hswitch\">" . ($host_lookup ? "off" : "on" ) . "</a>]</div>";
-  $html[] = "  <div class='options'>Sort order is " . ($sort_order ? "ascending" : "descending" ) . " [<a href=\"$url_sswitch\">" . ($sort_order ? "descending" : "ascending" ) . "</a>]</div>";	
+  $html[] = "  <div class='options'>Sort order is " . ($sort_order ? "ascending" : "descending" ) . " [<a href=\"$url_sswitch\">" . ($sort_order ? "descending" : "ascending" ) . "</a>]</div>";
   if ( count( $domains ) > 1 ) {
     $html[] = "<div class='options'>Domains: ";
     foreach( $domains as $d) {
@@ -303,10 +303,11 @@ while($row = $query->fetch_assoc()) {
 
 // Generate Page with report list and report data (if a report is selected).
 echo tmpl_page( ""
-	.tmpl_reportList($allowed_reports, $hostlookup, $dom_select)
-	.tmpl_reportData($reportid, $allowed_reports, $hostlookup )
+	.tmpl_reportList($allowed_reports, $hostlookup, $sortorder, $dom_select)
+        .tmpl_reportData($reportid, $allowed_reports, $hostlookup, $sortorder )
 	, $reportid
 	, $hostlookup
+	, $sortorder
 	, $dom_select
 	, $domains
 );
