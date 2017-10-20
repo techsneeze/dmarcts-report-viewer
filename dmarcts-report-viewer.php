@@ -227,6 +227,13 @@ if(isset($_GET['hostlookup']) && is_numeric($_GET['hostlookup'])){
 }else{
   die('Invalid hostlookup flag');
 }
+if(isset($_GET['sort_order']) && is_numeric($_GET['sort_order'])){
+  $sort_order=$_GET['sort_order']+0;
+}elseif(!isset($_GET['sort_order'])){
+  $sort_order= isset( $default_sort_order ) ? $default_sort_order : 1;
+}else{
+  die('Invalid sort_order flag');
+}
 if(isset($_GET['d'])){
   $dom_select=$_GET['d'];
 }elseif(!isset($_GET['d'])){
@@ -270,7 +277,14 @@ $where = '';
 if( $dom_select <> '' ) {
   $where = "WHERE domain='" . $mysqli->real_escape_string($dom_select) . "'";
 } 
-$sql = "SELECT report.* , sum(rptrecord.rcount) AS rcount FROM `report` LEFT JOIN rptrecord ON report.serial = rptrecord.serial $where GROUP BY serial ORDER BY mindate,maxdate,org DESC";
+
+if ( $sort_order ) {
+  $sort = "ASC";
+} else {
+  $sort = "DESC";
+}
+
+$sql = "SELECT report.* , sum(rptrecord.rcount) AS rcount FROM `report` LEFT JOIN rptrecord ON report.serial = rptrecord.serial $where GROUP BY serial ORDER BY mindate,maxdate,org $sort";
 
 $query = $mysqli->query($sql) or die("Query failed: ".$mysqli->error." (Error #" .$mysqli->errno.")");
 while($row = $query->fetch_assoc()) {
