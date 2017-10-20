@@ -169,13 +169,14 @@ function tmpl_reportData($reportnumber, $allowed_reports, $host_lookup = 1) {
 	return implode("\n  ",$reportdata);
 }
 
-function tmpl_page ($body, $reportid, $host_lookup = 1, $dom_select, $domains = array() ) {
+function tmpl_page ($body, $reportid, $host_lookup = 1, $sort_order, $dom_select, $domains = array() ) {
 	$html       = array();
 	$url_hswitch = ( $reportid ? "?report=$reportid&hostlookup=" : "?hostlookup=" )
                 . ($host_lookup ? "0" : "1" )
                 . (isset($dom_select) && $dom_select <> "" ? "&d=$dom_select" : "" )
                 ;
 	$url_dswitch = "?hostlookup=" . ($host_lookup ? "1" : "0" ); // drop selected report on domain switch
+	$url_sswitch = "?sortorder=" . ($sort_order ? "0" : "1" );
 
 	$html[] = "<!DOCTYPE html>";
 	$html[] = "<html>";
@@ -186,6 +187,7 @@ function tmpl_page ($body, $reportid, $host_lookup = 1, $dom_select, $domains = 
 
 	$html[] = "  <body>";
   $html[] = "  <div class='options'>Hostname Lookup is " . ($host_lookup ? "on" : "off" ) . " [<a href=\"$url_hswitch\">" . ($host_lookup ? "off" : "on" ) . "</a>]</div>";
+  $html[] = "  <div class='options'>Sort order is " . ($sort_order ? "ascending" : "descending" ) . " [<a href=\"$url_sswitch\">" . ($sort_order ? "descending" : "ascending" ) . "</a>]</div>";	
   if ( count( $domains ) > 1 ) {
     $html[] = "<div class='options'>Domains: ";
     foreach( $domains as $d) {
@@ -227,12 +229,12 @@ if(isset($_GET['hostlookup']) && is_numeric($_GET['hostlookup'])){
 }else{
   die('Invalid hostlookup flag');
 }
-if(isset($_GET['sort_order']) && is_numeric($_GET['sort_order'])){
-  $sort_order=$_GET['sort_order']+0;
-}elseif(!isset($_GET['sort_order'])){
-  $sort_order= isset( $default_sort_order ) ? $default_sort_order : 1;
+if(isset($_GET['sortorder']) && is_numeric($_GET['sortorder'])){
+  $sortorder=$_GET['sortorder']+0;
+}elseif(!isset($_GET['sortorder'])){
+  $sortorder= isset( $default_sort ) ? $default_sort : 1;
 }else{
-  die('Invalid sort_order flag');
+  die('Invalid sortorder flag');
 }
 if(isset($_GET['d'])){
   $dom_select=$_GET['d'];
@@ -278,7 +280,8 @@ if( $dom_select <> '' ) {
   $where = "WHERE domain='" . $mysqli->real_escape_string($dom_select) . "'";
 } 
 
-if ( $sort_order ) {
+$sort = '';
+if( $sortorder ) {
   $sort = "ASC";
 } else {
   $sort = "DESC";
