@@ -177,7 +177,12 @@ function tmpl_page ($body, $reportid, $host_lookup = 1, $sort_order, $dom_select
                 . (isset($dom_select) && $dom_select <> "" ? "&d=$dom_select" : "" )
                 ;
         $url_dswitch = "?hostlookup=" . ($host_lookup ? "1" : "0" ) . "&sortorder=" . ($sort_order); // drop selected report on domain switch
-        $url_sswitch = "?hostlookup=" . ($host_lookup) . "&sortorder=" . ($sort_order ? "0" : "1" );
+                $url_sswitch = ( $reportid ? "?report=$reportid&hostlookup=" : "?hostlookup=" )
+                . ($host_lookup)
+                . ( "&sortorder=" ) . ($sort_order ? "0" : "1" )
+                . (isset($dom_select) && $dom_select <> "" ? "&d=$dom_select" : "" )
+                ;
+
 	$html[] = "<!DOCTYPE html>";
 	$html[] = "<html>";
 	$html[] = "  <head>";
