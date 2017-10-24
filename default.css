@@ -2,9 +2,13 @@ h1 {
 	text-align: center;
 }
 
+.main {
+}
+
 table.reportlist {
 	margin: 2em auto 2em auto;
 	border-collapse: collapse;
+  clear: both;
 }
 
 table.reportlist td, table.reportlist th {
@@ -23,7 +27,6 @@ table.reportlist tr.sum {
 	border-top: 1px solid grey;
 }
 
-
 .reportdesc {
 	font-weight: bold;
 	border-top: 2px solid grey;
@@ -31,8 +34,6 @@ table.reportlist tr.sum {
 	margin-left: auto;
     margin-right: auto;
 }
-
-
 
 table.reportdata {
 	margin: 2em auto 2em auto;
@@ -61,7 +62,6 @@ table.reportdata tr.yellow {
 	background-color: #FFFF00;
 }
 
-
 .footer {
 	font-size: 70%;
 	text-align: center;
@@ -71,17 +71,47 @@ table.reportdata tr.yellow {
 	padding-top: 10px;
 }
 
-
-.options {
-  font-size: 90%;
-  text-align: right;
-  border: none;
-  width: 90%;
+.optionblock {
+  background: lightgrey;
+  padding: 0.4em;
+	float: right;
+	margin: auto 2em 1em auto;
 }
 
+.optionlabel {
+  font-weight: bold;
+}
 
-.right {
-	text-align:right;
+.options {
+  font-size: 80%;
+  text-align: left;
+  border: none;
+  width: 97%;
+  padding: 0.4em;
+  white-space: nowrap;
+}
+
+.activated {
+  border: 0px solid black;
+  color: black;
+  background: lightgreen;
+  padding: 0.2em;
+  padding-right: 0.4em;
+  padding-left: 0.4em;
+  text-decoration: none;
+}
+
+.deactivated {
+  border: 1px solid black;
+  color: black;
+  background: orange;
+  padding: 0.2em;
+  padding-right: 0.4em;
+  padding-left: 0.4em;
+  text-decoration: none;
+}
+.deactivated:hover {
+    background-color: yellow;
 }
 
 .center {
