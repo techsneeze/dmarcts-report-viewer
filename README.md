@@ -38,10 +38,10 @@ $dbname="dmarc";
 $dbuser="dmarc";
 $dbpass="xxx";
 $dbport="3306";
+$cssfile="default.css";
 
-$default_lookup = 1;  # 1= on 0=off (on is old behaviour )
-$default_sort = 1;  # 1= ASCdening 0=DESCending (ASCending is default behaviour )
-```
+$default_lookup = 1;  # 1=on 0=off (on is old behaviour )
+$default_sort = 1;  # 1=ASCdening 0=DESCending (ASCending is default behaviour )
 
 Ensure that `dmarcts-report-viewer-config.php`, `dmarcts-report-viewer.php`, and `default.css` are in the same folder.
 ## Usage
