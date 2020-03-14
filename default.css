@@ -1,3 +1,10 @@
+BODY {
+  font-size: 9pt;
+  font-family: Arial;
+  color: #005AA5;
+  background: #FFFFFF;
+}
+
 h1 {
 	text-align: center;
 }
@@ -5,14 +12,22 @@ h1 {
 .main {
 }
 
+.filters {
+  line-height: 10px;
+}
+
 table.reportlist {
-	margin: 2em auto 2em auto;
+	margin: 1em auto 1em auto;
 	border-collapse: collapse;
   clear: both;
 }
 
 table.reportlist td, table.reportlist th {
-	padding:3px;
+	padding:0px;
+	padding-right: 3px;
+	padding-left: 3px;
+  border-bottom: 0.1em solid;
+  border-right: 0.1em solid;
 }
 
 table.reportlist thead {
@@ -21,7 +36,7 @@ table.reportlist thead {
 
 }
 table.reportlist tbody tr:first-child td {
-	padding-top: 10px;
+	padding-top: 1px;
 }
 table.reportlist tr.sum {
 	border-top: 1px solid grey;
@@ -31,25 +46,27 @@ table.reportlist tr.selected {
 }
 .reportdesc {
 	font-weight: bold;
-	border-top: 2px solid grey;
-	width: 90%;
+	border-top: 1px solid grey;
+	width: 95%;
 	margin-left: auto;
-    margin-right: auto;
+  margin-right: auto;
+  float: left;
 }
 
 table.reportdata {
-	margin: 2em auto 2em auto;
+	margin: 1em auto 1em auto;
 	border-collapse: separate;
-	border-spacing: 2px;
+	border-spacing: 1px;
 }
 
 table.reportdata tr th, table.reportdata tr td {
 	text-align: center;
-	padding: 3px;
+	padding: 1px;
 }
 
 table.reportdata tr.red {
 	background-color: #FF0000;
+  color: #FFFFFF;
 }
 
 table.reportdata tr.orange {
@@ -64,35 +81,154 @@ table.reportdata tr.yellow {
 	background-color: #FFFF00;
 }
 
+table.reportdata td.lime {
+	background-color: #00FF00;
+}
+
 .footer {
 	font-size: 70%;
 	text-align: center;
-	border-top: 2px solid grey;
+	border-top: 1px solid grey;
 	width: 90%;
-	margin: 2em auto 1em auto;
-	padding-top: 10px;
+	margin: 1em auto 1em auto;
+	padding-top: 1px;
+}
+
+.close {
+	font-size: 110%;
+  font-weight: bold;
+	text-align: center;
+	width: 90%;
+	margin: 1em auto 1em auto;
+	padding-top: 1px;
+  cursor: pointer;
+}
+
+.view {
+  max-height: 100%;
+  max-width: 100%;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: none;
+  vertical-align: middle;
+}
+
+.print {
+  /* display: inline-block; */
+  border-top: 1px solid grey;
+  float: right;
+  width: 5%;
+  height: 65px;
+  text-align: center;
+  /* align-content: baseline; */
+  /* vertical-align: middle; */
+  white-space: nowrap;
+}
+
+.print_img {
+  max-height: 100%;
+  max-width: 100%;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: none;
+  line-height: 65px;
+}
+
+.reporttitle {
+  width: 70%;
+	float: left;
+  white-space: nowrap;
+  height: 50px;
+}
+
+.reportgraphs {
+  width: 70%;
+  height: 160px;
+	float: left;
+  white-space: nowrap;
+  padding-bottom: 0px;
+  text-align: center;
+}
+
+div.graph_col { width: 100%; height: 150px; padding-bottom: 0px; display: inline-block; float: left; }
+div.graphDKIM { width: 150px; height: 150px; text-align: center; border: 0px solid; display: inline-block; }
+div.graphSPF { width: 150px; height: 150px; text-align: center; border: 0px solid; display: inline-block; }
+div.graphDMARC { width: 150px; height: 150px; text-align: center; border: 0px solid; display: inline-block; }
+
+div.reportlist {
+  width: auto;
+  Height: auto;
+//  text-align: center;
+  border: 1px solid;
+  border-color: white;
+  display: block;
+  overflow-y: auto;
+  float: unset;
+}
+
+div.reportlist_status {
+  width: 95em;
+  Height: 40em;
+  text-align: center;
+  border: 1px solid;
+  overflow-y: auto;
+  position: fixed;
+  display: none;
+  background-color: white;
+  margin-left: 5em;
+  margin-top: -10em;
+  z-index: 9999;
+}
+
+div.showxml {
+  font-size: 10pt;
+  width: 60em;
+  Height: 40em;
+  // text-align: center;
+  border: 1px solid;
+  overflow-y: auto;
+  position: fixed;
+  display: none;
+  background-color: white;
+  margin-left: 5em;
+  margin-top: -10em;
+  padding-left: 1.5em;
+  z-index: 9999;
 }
 
 .optionblock {
   background: lightgrey;
-  padding: 0.4em;
+/*   padding: 0.4em; */
 	float: right;
-	margin: auto 2em 1em auto;
+/* 	margin: auto 2em 1em auto; */
   white-space: nowrap;
+  width: 30%;
+  height: 210px;
 }
 
 .optionlabel {
+  font-size: 8pt;
+  font-family: Arial;
   font-weight: bold;
   float: left; clear: left; 
   margin-right: 1em;
 }
 
 .options {
-  font-size: 70%;
+  font-size: 9pt;
+  font-family: Arial;
 	text-align: right;
   border: none;
   width: 97%;
-  padding: 0.4em;
+  padding: 0.05em;
 }
 
 .activated {

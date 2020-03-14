@@ -1,2 +1,4 @@
 .kateproject*
+.htaccess
 dmarcts-report-viewer-config.php
+index.php
