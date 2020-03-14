@@ -16,12 +16,6 @@ function reportData(id, url) {
   });
 }
 
-/* $(document).ready(function(){
-  $(".close").click(function(){
-    $("#reportData").hide();
-  });
-}); */
-
 function printData() {
   var divToPrint=document.getElementById("reportData");
   newWin= window.open("");
