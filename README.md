@@ -33,7 +33,7 @@ apt-get install  php-mysql
 
 ### Download the required files:
 ```
-git clone https://github.com/techsneeze/dmarcts-report-viewer.git
+git clone https://github.com/ANewSmurf/dmarcts-report-viewer.git
 ```
 
 Once the PHP files have been downloaded, you will need to copy `dmarcts-report-viewer-config.php.sample` to `dmarcts-report-viewer-config.php`.
@@ -54,11 +54,11 @@ $dbpass="xxx";
 $dbport="3306";
 $cssfile="default.css";
 
-$default_lookup = 1;  # 1=on 0=off (on is old behaviour )
-$default_sort = 1;  # 1=ASCdening 0=DESCending (ASCending is default behaviour )
+$default_lookup = 0;  # 1=on 0=off (on is old behaviour )
+$default_sort = 0;  # 1=ASCdening 0=DESCending (ASCending is default behaviour )
 ```
 
-Ensure that `dmarcts-report-viewer-config.php`, `dmarcts-report-viewer.php`, and `default.css` are in the same folder.
+Ensure that `dmarcts-report-viewer-config.php` and `dmarcts-report-viewer.php` are in the same folder.
 ## Usage
 
 Navigate in your browser to the location of the `dmarcts-report-viewer.php` file.
@@ -71,5 +71,3 @@ You should be presented with the basic report view, allowing you to navigate thr
 * Orange : Either DKIM or SPF (but not both) = fail
 * Yellow : Some other condition, and should be investigated (e.g. DKIM or SPF result were missing, "softfail", "temperror", etc.)
 
-
-More info can currently be found at : [TechSneeze.com](http://www.techsneeze.com/dmarc-report/)
