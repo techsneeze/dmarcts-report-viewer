@@ -148,7 +148,7 @@ function tmpl_reportList($allowed_reports, $host_lookup = 1, $sort_order, $dom_s
         . "<a href='#" . $row['serial'] . "' OnClick=\"reportData(" . $row['serial'] . ", $url);\">"
         . $row['reportid']. "</a>"
         . " <a href='#" . $row['serial'] . "' OnClick=\"showXML(" . $row['serial'] . ");\">"
-        . "<img alt='View Raw XML Report' class='view' src='/images/loupe2.png'></a></td>";
+        . "<img alt='View Raw XML Report' class='view' src='./images/loupe2.png'></a></td>";
     } else {
       $reportlist[] = "      <td class='center'>-</td>";
     }
@@ -198,7 +198,7 @@ function tmpl_reportData($reportnumber, $allowed_reports, $host_lookup = 1, $sor
 		return "Unknown report number!<BR>";
 	}
 
-  // $reportdata[] = "<div class='print'><div class='print_img'><a href=\"javascript: document.getElementById(&quot;CONTENT&quot;).contentWindow.print();\"><img class='print_img' src=\"/images/print.png\"></a></div></div>";
+  // $reportdata[] = "<div class='print'><div class='print_img'><a href=\"javascript: document.getElementById(&quot;CONTENT&quot;).contentWindow.print();\"><img class='print_img' src=\"./images/print.png\"></a></div></div>";
   $reportdata[] = "<div class='print'><div class='print_img'><a href=\"javascript: printData();\"><img class='print_img' src=\"/images/print.png\"></a></div></div>";
 	$reportdata[] = "<table class='reportdata'>";
 	$reportdata[] = "  <thead>";
