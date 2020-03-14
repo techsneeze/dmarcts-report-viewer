@@ -318,8 +318,8 @@ function tmpl_reportData($reportnumber, $allowed_reports, $host_lookup = 1, $sor
 }
 
 function tmpl_Recordpage ($body, $recordid, $host_lookup = 1, $sort_order, $dom_select, $domains = array(), $cssfile, $org_select, $orgs = array(), $per_select, $periods = array(), $grp_select, $selectSPF, $selectDKIM, $datachart, $datachart2, $datachart3, $where2) {
-  $html[] = "    <link rel='stylesheet' type='text/css' href='$cssfile'>";
-  $html[] = "    <link rel='stylesheet' type='text/css' href='print-$cssfile' media='print'>";
+  $html[] = "    <link rel='stylesheet' type='text/css' href='./css/$cssfile'>";
+  $html[] = "    <link rel='stylesheet' type='text/css' href='./css/print-$cssfile' media='print'>";
 
   # add body
   #--------------------------------------------------------------------------
@@ -357,7 +357,7 @@ function tmpl_page ($body, $reportid, $host_lookup = 1, $sort_order, $dom_select
 	$html[] = "<html>";
 	$html[] = "  <head>";
 	$html[] = "    <title>DMARC Report Viewer</title>";
-  $html[] = "    <link rel='stylesheet' href='$cssfile'>";
+  $html[] = "    <link rel='stylesheet' href='./css/$cssfile'>";
   $html[] = "    <script type='text/javascript' src='/scripts/jquery-3.3.1.min.js'></script>";
   $html[] = "    <script type='text/javascript' src='/scripts/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js'></script>";
   // $html[] = "    <script type='text/javascript' src='/scripts/jquery-1.9.1.min.js'></script>";
