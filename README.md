@@ -7,11 +7,15 @@ A PHP viewer for DMARC records that have been parsed by [John Levine's rddmarc s
 
 ![alt text](https://cert.civis.net/images/main.png "Screenshot 1")
 
-[Larger version of Screenshot 1](http://www.techsneeze.com/wp-content/uploads/2018/05/dmarcts-viewer-demo-1.png)
+[Larger version of Screenshot 1](https://cert.civis.net/images/main.png)
 
-![alt text](http://www.techsneeze.com/wp-content/uploads/2018/05/dmarcts-viewer-demo-2x600.png "Screenshot 2")
+![alt text](https://cert.civis.net/images/reportdata.png "Screenshot 2")
 
-[Larger version of Screenshot 2](http://www.techsneeze.com/wp-content/uploads/2018/05/dmarcts-viewer-demo-2.png)
+[Larger version of Screenshot 2](https://cert.civis.net/images/reportdata.png)
+
+![alt text](https://cert.civis.net/images/reportxml.png "Screenshot 3")
+
+[Larger version of Screenshot 3](https://cert.civis.net/images/reportxml.png)
 
 ## Installation and Configuration
 
