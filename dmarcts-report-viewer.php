@@ -51,7 +51,7 @@ function format_date($date, $format) {
 	// $answer = date($format, strtotime($date));
 	$answer = date('Y-m-d H:i:s', strtotime($date));
 	return $answer;
-};
+}
 
 function tmpl_reportList($allowed_reports, $host_lookup = 1, $sort_order, $dom_select = '', $org_select = '', $per_select = '', $reportid, $grp_select = '', $selectSPF = '', $selectDKIM = '') {
 
