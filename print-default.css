@@ -47,7 +47,7 @@ table.reportlist tr.selected {
 .reportdesc {
 	font-weight: bold;
 	border-top: 1px solid grey;
-	width: 95%;
+	width: 100%;
 	margin-left: auto;
   margin-right: auto;
   float: left;
@@ -57,11 +57,13 @@ table.reportdata {
 	margin: 1em auto 1em auto;
 	border-collapse: separate;
 	border-spacing: 1px;
+  width: 100%;
 }
 
 table.reportdata tr th, table.reportdata tr td {
 	text-align: center;
 	padding: 1px;
+  word-break:break-all;
 }
 
 table.reportdata tr.red {
@@ -86,7 +88,7 @@ table.reportdata td.lime {
 }
 
 .footer {
-	font-size: 70%;
+	font-size: 20%;
 	text-align: center;
 	border-top: 1px solid grey;
 	width: 90%;
@@ -95,40 +97,27 @@ table.reportdata td.lime {
 }
 
 .close {
-	font-size: 110%;
+	font-size: 0%;
   font-weight: bold;
 	text-align: center;
-	width: 90%;
+	width: 100%;
 	margin: 1em auto 1em auto;
 	padding-top: 1px;
   cursor: pointer;
 }
 
-.view {
-  max-height: 100%;
-  max-width: 100%;
-  position: relative;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  border: none;
-  vertical-align: middle;
-}
-
 .print {
   border-top: 1px solid grey;
   float: right;
-  width: 5%;
+  width: 0%;
   height: 65px;
   text-align: center;
   white-space: nowrap;
 }
 
 .print_img {
-  max-height: 100%;
-  max-width: 100%;
+  max-height: 0%;
+  max-width: 0%;
   position: relative;
   top: 0;
   bottom: 0;
@@ -163,6 +152,7 @@ div.graphDMARC { width: 150px; height: 150px; text-align: center; border: 0px so
 div.reportlist {
   width: auto;
   Height: auto;
+  text-align: center;
   border: 1px solid;
   border-color: white;
   display: block;
@@ -181,22 +171,6 @@ div.reportlist_status {
   background-color: white;
   margin-left: 5em;
   margin-top: -10em;
-  z-index: 9999;
-}
-
-div.showxml {
-  font-size: 10pt;
-  width: 60em;
-  Height: 40em;
-  border: 1px solid;
-  overflow-y: auto;
-  position: fixed;
-  display: none;
-  background-color: white;
-  margin-left: 5em;
-  margin-top: -10em;
-  padding-left: 1.5em;
-  z-index: 9999;
 }
 
 .optionblock {
