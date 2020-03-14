@@ -359,7 +359,6 @@ function tmpl_page ($body, $reportid, $host_lookup = 1, $sort_order, $dom_select
 	$html[] = "    <title>DMARC Report Viewer</title>";
   $html[] = "    <link rel='stylesheet' href='./css/$cssfile'>";
   $html[] = "    <script type='text/javascript' src='./scripts/jquery-3.3.1.min.js'></script>";
-  $html[] = "    <script type='text/javascript' src='./scripts/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js'></script>";
   $html[] = "    <script type='text/javascript' src='./scripts/Chart.2.5.0.min.js'></script>";
   $html[] = "    <script type='text/javascript' src='./scripts/dmarcts-report-viewer.js'></script>";
 	$html[] = "  </head>";

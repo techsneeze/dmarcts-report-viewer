@@ -16,11 +16,11 @@ function reportData(id, url) {
   });
 }
 
-$(document).ready(function(){
+/* $(document).ready(function(){
   $(".close").click(function(){
     $("#reportData").hide();
   });
-});
+}); */
 
 function printData() {
   var divToPrint=document.getElementById("reportData");
@@ -35,7 +35,7 @@ function printData() {
 function showXML(id) {
   $.ajax({
     type: 'GET',
-    url: 'https://cert.civis.net/dmarc-report/index.php?showxml='+id,
+    url: 'index.php?showxml='+id,
     timeout: 10000,
     success: function(data) {
       $('#showxml').show();
