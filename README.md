@@ -5,7 +5,7 @@ A PHP viewer for DMARC records that have been parsed by [John Levine's rddmarc s
 
 ## Screenshots
 
-![alt text](https://cert.civis.net/images/main.png "Screenshot 1")
+![alt text](https://cert.civis.net/images/main-600.png "Screenshot 1")
 
 [Larger version of Screenshot 1](https://cert.civis.net/images/main.png)
 
