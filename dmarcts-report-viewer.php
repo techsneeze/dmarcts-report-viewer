@@ -975,133 +975,133 @@ while($row = $query->fetch_assoc()) {
 	}
 }
 
-if (isset($allowed_reports[BySerial])) {
-// Generate Compliance Data
-$sql = "SELECT sum(rptrecord.rcount) AS rcount, rptrecord.dkimresult AS dkimresult, rptrecord.dkim_align AS dkim_align FROM report LEFT JOIN (SELECT rcount, COALESCE(dkimresult, 'none') AS dkimresult, COALESCE(dkim_align, 'none') AS dkim_align, COALESCE(spfresult, 'none') AS spfresult, COALESCE(spf_align, 'none') AS spf_align, rptrecord.serial FROM rptrecord) AS rptrecord ON report.serial = rptrecord.serial $where GROUP BY dkimresult, dkim_align ORDER BY dkimresult, dkim_align";
+if ((isset($allowed_reports[BySerial])) && ($reportid == "") && (! isset($_GET['showxml']))) {
+  // Generate Compliance Data
+  $sql = "SELECT sum(rptrecord.rcount) AS rcount, rptrecord.dkimresult AS dkimresult, rptrecord.dkim_align AS dkim_align FROM report LEFT JOIN (SELECT rcount, COALESCE(dkimresult, 'none') AS dkimresult, COALESCE(dkim_align, 'none') AS dkim_align, COALESCE(spfresult, 'none') AS spfresult, COALESCE(spf_align, 'none') AS spf_align, rptrecord.serial FROM rptrecord) AS rptrecord ON report.serial = rptrecord.serial $where GROUP BY dkimresult, dkim_align ORDER BY dkimresult, dkim_align";
 
-// Debug
-// echo "sql reports = $sql<BR>";
+  // Debug
+  // echo "sql reports = $sql<BR>";
 
-$query = $mysqli->query($sql) or die("Query failed: ".$mysqli->error." (Error #" .$mysqli->errno.")");
-$total = 0;
-$compliant = 0;
-$non_compliant = 0;
-while($row = $query->fetch_assoc()) {
-	//todo: check ACL if this row is allowed
-  if (true) {
-    if (($row['dkimresult'] == "pass") && ($row['dkim_align'] == "pass")) {
-      $compliant += $row['rcount'];
-      $total += $row['rcount'];
-    } else {
-      $non_compliant += $row['rcount'];
-      $total += $row['rcount'];
-    }
-	}
-}
-$pct_compliant = ($compliant / $total) * 100;
-$pct_non_compliant = ($non_compliant / $total) * 100;
-// echo $total . " - " . $compliant . " - " . $non_compliant . "<BR>";
-// echo number_format($pct_compliant, 1) . " - " . number_format($pct_non_compliant, 1);
+  $query = $mysqli->query($sql) or die("Query failed: ".$mysqli->error." (Error #" .$mysqli->errno.")");
+  $total = 0;
+  $compliant = 0;
+  $non_compliant = 0;
+  while($row = $query->fetch_assoc()) {
+	  //todo: check ACL if this row is allowed
+    if (true) {
+      if (($row['dkimresult'] == "pass") && ($row['dkim_align'] == "pass")) {
+        $compliant += $row['rcount'];
+        $total += $row['rcount'];
+      } else {
+        $non_compliant += $row['rcount'];
+        $total += $row['rcount'];
+      }
+	  }
+  }
+  $pct_compliant = ($compliant / $total) * 100;
+  $pct_non_compliant = ($non_compliant / $total) * 100;
+  // echo $total . " - " . $compliant . " - " . $non_compliant . "<BR>";
+  // echo number_format($pct_compliant, 1) . " - " . number_format($pct_non_compliant, 1);
 
-$datachart =  "     data: {";
-$datachart .= "       labels: ['Compliant', 'Non Compliant'],";
-$datachart .= "       datasets: [{";
-$datachart .= "         data: [" . number_format($pct_compliant, 1) . ", " . number_format($pct_non_compliant, 1) . "],";
-$datachart .= "         backgroundColor: [";
-$datachart .= "           'rgba(40,173,78,1)',";
-$datachart .= "           'rgba(217,83,79,1)',";
-$datachart .= "         ],";
-$datachart .= "         borderColor: [";
-$datachart .= "           'rgba(40,173,78,0)',";
-$datachart .= "           'rgba(217,83,79,0)',";
-$datachart .= "         ],";
-$datachart .= "         borderWidth: 1";
-$datachart .= "       }]";
-$datachart .= "     }";
+  $datachart =  "     data: {";
+  $datachart .= "       labels: ['Compliant', 'Non Compliant'],";
+  $datachart .= "       datasets: [{";
+  $datachart .= "         data: [" . number_format($pct_compliant, 1) . ", " . number_format($pct_non_compliant, 1) . "],";
+  $datachart .= "         backgroundColor: [";
+  $datachart .= "           'rgba(40,173,78,1)',";
+  $datachart .= "           'rgba(217,83,79,1)',";
+  $datachart .= "         ],";
+  $datachart .= "         borderColor: [";
+  $datachart .= "           'rgba(40,173,78,0)',";
+  $datachart .= "           'rgba(217,83,79,0)',";
+  $datachart .= "         ],";
+  $datachart .= "         borderWidth: 1";
+  $datachart .= "       }]";
+  $datachart .= "     }";
 
-$sql = "SELECT sum(rptrecord.rcount) AS rcount, rptrecord.spfresult AS spfresult, rptrecord.spf_align AS spf_align FROM report LEFT JOIN (SELECT rcount, COALESCE(dkimresult, 'none') AS dkimresult, COALESCE(dkim_align, 'none') AS dkim_align, COALESCE(spfresult, 'none') AS spfresult, COALESCE(spf_align, 'none') AS spf_align, rptrecord.serial FROM rptrecord) AS rptrecord ON report.serial = rptrecord.serial $where GROUP BY spfresult, spf_align ORDER BY spfresult, spf_align";
+  $sql = "SELECT sum(rptrecord.rcount) AS rcount, rptrecord.spfresult AS spfresult, rptrecord.spf_align AS spf_align FROM report LEFT JOIN (SELECT rcount, COALESCE(dkimresult, 'none') AS dkimresult, COALESCE(dkim_align, 'none') AS dkim_align, COALESCE(spfresult, 'none') AS spfresult, COALESCE(spf_align, 'none') AS spf_align, rptrecord.serial FROM rptrecord) AS rptrecord ON report.serial = rptrecord.serial $where GROUP BY spfresult, spf_align ORDER BY spfresult, spf_align";
 
-// Debug
-// echo "sql reports = $sql<BR>";
+  // Debug
+  // echo "sql reports = $sql<BR>";
 
-$query = $mysqli->query($sql) or die("Query failed: ".$mysqli->error." (Error #" .$mysqli->errno.")");
-$total = 0;
-$compliant = 0;
-$non_compliant = 0;
-while($row = $query->fetch_assoc()) {
-	//todo: check ACL if this row is allowed
-  if (true) {
-    if (($row['spfresult'] == "pass") && ($row['spf_align'] == "pass")) {
-      $compliant += $row['rcount'];
-      $total += $row['rcount'];
-    } else {
-      $non_compliant += $row['rcount'];
-      $total += $row['rcount'];
-    }
-	}
-}
-$pct_compliant = ($compliant / $total) * 100;
-$pct_non_compliant = ($non_compliant / $total) * 100;
-// echo $total . " - " . $compliant . " - " . $non_compliant . "<BR>";
-// echo number_format($pct_compliant, 1) . " - " . number_format($pct_non_compliant, 1);
+  $query = $mysqli->query($sql) or die("Query failed: ".$mysqli->error." (Error #" .$mysqli->errno.")");
+  $total = 0;
+  $compliant = 0;
+  $non_compliant = 0;
+  while($row = $query->fetch_assoc()) {
+	  //todo: check ACL if this row is allowed
+    if (true) {
+      if (($row['spfresult'] == "pass") && ($row['spf_align'] == "pass")) {
+        $compliant += $row['rcount'];
+        $total += $row['rcount'];
+      } else {
+        $non_compliant += $row['rcount'];
+        $total += $row['rcount'];
+      }
+	  }
+  }
+  $pct_compliant = ($compliant / $total) * 100;
+  $pct_non_compliant = ($non_compliant / $total) * 100;
+  // echo $total . " - " . $compliant . " - " . $non_compliant . "<BR>";
+  // echo number_format($pct_compliant, 1) . " - " . number_format($pct_non_compliant, 1);
 
-$datachart2 =  "     data: {";
-$datachart2 .= "       labels: ['Compliant', 'Non Compliant'],";
-$datachart2 .= "       datasets: [{";
-$datachart2 .= "         data: [" . number_format($pct_compliant, 1) . ", " . number_format($pct_non_compliant, 1) . "],";
-$datachart2 .= "         backgroundColor: [";
-$datachart2 .= "           'rgba(40,173,78,1)',";
-$datachart2 .= "           'rgba(217,83,79,1)',";
-$datachart2 .= "         ],";
-$datachart2 .= "         borderColor: [";
-$datachart2 .= "           'rgba(40,173,78,0)',";
-$datachart2 .= "           'rgba(217,83,79,0)',";
-$datachart2 .= "         ],";
-$datachart2 .= "         borderWidth: 1";
-$datachart2 .= "       }]";
-$datachart2 .= "     }";
+  $datachart2 =  "     data: {";
+  $datachart2 .= "       labels: ['Compliant', 'Non Compliant'],";
+  $datachart2 .= "       datasets: [{";
+  $datachart2 .= "         data: [" . number_format($pct_compliant, 1) . ", " . number_format($pct_non_compliant, 1) . "],";
+  $datachart2 .= "         backgroundColor: [";
+  $datachart2 .= "           'rgba(40,173,78,1)',";
+  $datachart2 .= "           'rgba(217,83,79,1)',";
+  $datachart2 .= "         ],";
+  $datachart2 .= "         borderColor: [";
+  $datachart2 .= "           'rgba(40,173,78,0)',";
+  $datachart2 .= "           'rgba(217,83,79,0)',";
+  $datachart2 .= "         ],";
+  $datachart2 .= "         borderWidth: 1";
+  $datachart2 .= "       }]";
+  $datachart2 .= "     }";
 
-$sql = "SELECT sum(rptrecord.rcount) AS rcount, rptrecord.dkimresult AS dkimresult, rptrecord.dkim_align AS dkim_align, rptrecord.spfresult, rptrecord.spf_align AS spf_align FROM report LEFT JOIN (SELECT rcount, COALESCE(dkimresult, 'none') AS dkimresult, COALESCE(dkim_align, 'none') AS dkim_align, COALESCE(spfresult, 'none') AS spfresult, COALESCE(spf_align, 'none') AS spf_align, rptrecord.serial FROM rptrecord) AS rptrecord ON report.serial = rptrecord.serial $where GROUP BY dkimresult, dkim_align, spfresult, spf_align ORDER BY dkimresult, dkim_align, spfresult, spf_align";
+  $sql = "SELECT sum(rptrecord.rcount) AS rcount, rptrecord.dkimresult AS dkimresult, rptrecord.dkim_align AS dkim_align, rptrecord.spfresult, rptrecord.spf_align AS spf_align FROM report LEFT JOIN (SELECT rcount, COALESCE(dkimresult, 'none') AS dkimresult, COALESCE(dkim_align, 'none') AS dkim_align, COALESCE(spfresult, 'none') AS spfresult, COALESCE(spf_align, 'none') AS spf_align, rptrecord.serial FROM rptrecord) AS rptrecord ON report.serial = rptrecord.serial $where GROUP BY dkimresult, dkim_align, spfresult, spf_align ORDER BY dkimresult, dkim_align, spfresult, spf_align";
 
-// Debug
-// echo "sql reports = $sql<BR>";
+  // Debug
+  // echo "sql reports = $sql<BR>";
 
-$query = $mysqli->query($sql) or die("Query failed: ".$mysqli->error." (Error #" .$mysqli->errno.")");
-$total = 0;
-$compliant = 0;
-$non_compliant = 0;
-while($row = $query->fetch_assoc()) {
-	//todo: check ACL if this row is allowed
-  if (true) {
-    if (($row['dkimresult'] == "pass") && ($row['dkim_align'] == "pass") && ($row['spfresult'] == "pass") && ($row['spf_align'] == "pass")) {
-      $compliant += $row['rcount'];
-      $total += $row['rcount'];
-    } else {
-      $non_compliant += $row['rcount'];
-      $total += $row['rcount'];
-    }
-	}
-}
-$pct_compliant = ($compliant / $total) * 100;
-$pct_non_compliant = ($non_compliant / $total) * 100;
-// echo $total . " - " . $compliant . " - " . $non_compliant . "<BR>";
-// echo number_format($pct_compliant, 1) . " - " . number_format($pct_non_compliant, 1);
+  $query = $mysqli->query($sql) or die("Query failed: ".$mysqli->error." (Error #" .$mysqli->errno.")");
+  $total = 0;
+  $compliant = 0;
+  $non_compliant = 0;
+  while($row = $query->fetch_assoc()) {
+	  //todo: check ACL if this row is allowed
+    if (true) {
+      if (($row['dkimresult'] == "pass") && ($row['dkim_align'] == "pass") && ($row['spfresult'] == "pass") && ($row['spf_align'] == "pass")) {
+        $compliant += $row['rcount'];
+        $total += $row['rcount'];
+      } else {
+        $non_compliant += $row['rcount'];
+        $total += $row['rcount'];
+      }
+	  }
+  }
+  $pct_compliant = ($compliant / $total) * 100;
+  $pct_non_compliant = ($non_compliant / $total) * 100;
+  // echo $total . " - " . $compliant . " - " . $non_compliant . "<BR>";
+  // echo number_format($pct_compliant, 1) . " - " . number_format($pct_non_compliant, 1);
 
-$datachart3 =  "     data: {";
-$datachart3 .= "       labels: ['Compliant', 'Non Compliant'],";
-$datachart3 .= "       datasets: [{";
-$datachart3 .= "         data: [" . number_format($pct_compliant, 1) . ", " . number_format($pct_non_compliant, 1) . "],";
-$datachart3 .= "         backgroundColor: [";
-$datachart3 .= "           'rgba(40,173,78,1)',";
-$datachart3 .= "           'rgba(217,83,79,1)',";
-$datachart3 .= "         ],";
-$datachart3 .= "         borderColor: [";
-$datachart3 .= "           'rgba(40,173,78,0)',"; #28AD4E
-$datachart3 .= "           'rgba(217,83,79,0)',"; #D9534F
-$datachart3 .= "         ],";
-$datachart3 .= "         borderWidth: 1";
-$datachart3 .= "       }]";
-$datachart3 .= "     }";
+  $datachart3 =  "     data: {";
+  $datachart3 .= "       labels: ['Compliant', 'Non Compliant'],";
+  $datachart3 .= "       datasets: [{";
+  $datachart3 .= "         data: [" . number_format($pct_compliant, 1) . ", " . number_format($pct_non_compliant, 1) . "],";
+  $datachart3 .= "         backgroundColor: [";
+  $datachart3 .= "           'rgba(40,173,78,1)',";
+  $datachart3 .= "           'rgba(217,83,79,1)',";
+  $datachart3 .= "         ],";
+  $datachart3 .= "         borderColor: [";
+  $datachart3 .= "           'rgba(40,173,78,0)',"; #28AD4E
+  $datachart3 .= "           'rgba(217,83,79,0)',"; #D9534F
+  $datachart3 .= "         ],";
+  $datachart3 .= "         borderWidth: 1";
+  $datachart3 .= "       }]";
+  $datachart3 .= "     }";
 } else {
   $datachart =  "      data: {";
   $datachart .= "      }";
