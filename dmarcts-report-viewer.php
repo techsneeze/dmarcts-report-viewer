@@ -48,8 +48,7 @@ function get_status_color($row) {
 }
 
 function format_date($date, $format) {
-	// $answer = date($format, strtotime($date));
-	$answer = date('Y-m-d H:i:s', strtotime($date));
+	$answer = date($format, strtotime($date));
 	return $answer;
 }
 
@@ -94,69 +93,69 @@ function tmpl_reportList($allowed_reports, $host_lookup = 1, $sort_order, $dom_s
 	$reportsum    = 0;
 
   if (isset($allowed_reports[BySerial])) {
-  foreach ($allowed_reports[BySerial] as $row) {
-		$row = array_map('htmlspecialchars', $row);
-		$date_output_format = "r";
-		$reportlist[] = "    <tr id='" . $row['serial'] . "'>";
-		$reportlist[] = "      <td class='right'><span class=\"circle_".get_status_color($row)."\"></span></td>";
-		$reportlist[] = "      <td class='right'>". format_date($row['mindate'], $date_output_format). " - ". format_date($row['maxdate'], $date_output_format). "</td>";
-    if ($grp_select == 'dom') {
-      $url = "'?report=-1" 
-        . ( $host_lookup ? "&hostlookup=1" : "&hostlookup=0" ) 
-        . ( $sort_order ? "&sortorder=1" : "&sortorder=0" ) 
-        . ($grp_select == '' ? '' : "&g=" . urlencode($grp_select)) 
-        . ($dom_select == '' ? '' : "&d=" . urlencode($dom_select)) 
-        . ($org_select == '' ? '' : "&o=" . urlencode($org_select)) 
-        . ($selectSPF == '' ? '' : "&spf=" . urlencode($selectSPF)) 
-        . ($selectDKIM == '' ? '' : "&dkim=" . urlencode($selectDKIM)) 
-        . ($per_select == '' ? '' : "&p=" . urlencode($per_select)) . "'"; 
-      $reportlist[] = "      <td class='center'>"
-        . "<a href='#" . $row['serial'] . "' id='" . $row['domain'] ."' OnClick=\"$('#'+" . $row['serial'] . ").css('background-color', 'lightgrey'); reportData(" . -1 . ", $url);\">"
-        . $row['domain']. "</a></td>";
-    } else {
-      $reportlist[] = "      <td class='center'>". $row['domain']. "</td>";
+    foreach ($allowed_reports[BySerial] as $row) {
+		  $row = array_map('htmlspecialchars', $row);
+		  $date_output_format = "Y-m-d H:i:s";
+		  $reportlist[] = "    <tr id='" . $row['serial'] . "'>";
+		  $reportlist[] = "      <td class='right'><span class=\"circle_".get_status_color($row)."\"></span></td>";
+		  $reportlist[] = "      <td class='right'>". format_date($row['mindate'], $date_output_format). " - ". format_date($row['maxdate'], $date_output_format). "</td>";
+      if ($grp_select == 'dom') {
+        $url = "'?report=-1" 
+          . ( $host_lookup ? "&hostlookup=1" : "&hostlookup=0" ) 
+          . ( $sort_order ? "&sortorder=1" : "&sortorder=0" ) 
+          . ($grp_select == '' ? '' : "&g=" . urlencode($grp_select)) 
+          . ($dom_select == '' ? '' : "&d=" . urlencode($dom_select)) 
+          . ($org_select == '' ? '' : "&o=" . urlencode($org_select)) 
+          . ($selectSPF == '' ? '' : "&spf=" . urlencode($selectSPF)) 
+          . ($selectDKIM == '' ? '' : "&dkim=" . urlencode($selectDKIM)) 
+          . ($per_select == '' ? '' : "&p=" . urlencode($per_select)) . "'"; 
+        $reportlist[] = "      <td class='center'>"
+          . "<a href='#" . $row['serial'] . "' id='" . $row['domain'] ."' OnClick=\"$('#'+" . $row['serial'] . ").css('background-color', 'lightgrey'); reportData(" . -1 . ", $url);\">"
+          . $row['domain']. "</a></td>";
+      } else {
+        $reportlist[] = "      <td class='center'>". $row['domain']. "</td>";
+      }
+      if ($grp_select == 'org') {
+        $url = "'?report=-1" 
+          . ( $host_lookup ? "&hostlookup=1" : "&hostlookup=0" ) 
+          . ( $sort_order ? "&sortorder=1" : "&sortorder=0" ) 
+          . ($grp_select == '' ? '' : "&g=" . urlencode($grp_select)) 
+          . ($dom_select == '' ? '' : "&d=" . urlencode($dom_select)) 
+          . ($row['org'] == '' ? '' : "&o=" . urlencode($row['org'])) 
+          . ($selectSPF == '' ? '' : "&spf=" . urlencode($selectSPF)) 
+          . ($selectDKIM == '' ? '' : "&dkim=" . urlencode($selectDKIM)) 
+          . ($per_select == '' ? '' : "&p=" . urlencode($per_select)) . "'"; 
+        $reportlist[] = "      <td class='center'>"
+          . "<a href='#" . $row['serial'] . "' id='" . $row['org'] ."' OnClick=\"$('#'+" . $row['serial'] . ").css('background-color', 'lightgrey'); reportData(" . -1 . ", $url);\">"
+          . $row['org']. "</a></td>";
+      } elseif ($grp_select == 'dom') {
+        $reportlist[] = "      <td class='center'>-</td>";
+      } else {
+        $reportlist[] = "      <td class='center'>". $row['org']. "</td>";
+      }
+      if ($grp_select == '') {
+        $url = "'?report=" . $row['serial']
+          . ( $host_lookup ? "&hostlookup=1" : "&hostlookup=0" ) 
+          . ( $sort_order ? "&sortorder=1" : "&sortorder=0" ) 
+          . ($grp_select == '' ? '' : "&g=" . urlencode($grp_select)) 
+          . ($dom_select == '' ? '' : "&d=" . urlencode($dom_select)) 
+          . ($org_select == '' ? '' : "&o=" . urlencode($org_select)) 
+          . ($selectSPF == '' ? '' : "&spf=" . urlencode($selectSPF)) 
+          . ($selectDKIM == '' ? '' : "&dkim=" . urlencode($selectDKIM)) 
+          . ($per_select == '' ? '' : "&p=" . urlencode($per_select)) . "'"; 
+        $reportlist[] = "      <td class='center'>"
+          . "<a href='#" . $row['serial'] . "' OnClick=\"reportData(" . $row['serial'] . ", $url);\">"
+          . $row['reportid']. "</a>"
+          . " <a href='#" . $row['serial'] . "' OnClick=\"showXML(" . $row['serial'] . ");\">"
+          . "<img alt='View Raw XML Report' class='view' src='./images/loupe2.png'></a></td>";
+      } else {
+        $reportlist[] = "      <td class='center'>-</td>";
+      }
+		  $reportlist[] = "      <td class='center'>". number_format($row['rcount']+0,0). "</td>";
+		  $reportlist[] = "    </tr>";
+		  $reportsum += $row['rcount'];
     }
-    if ($grp_select == 'org') {
-      $url = "'?report=-1" 
-        . ( $host_lookup ? "&hostlookup=1" : "&hostlookup=0" ) 
-        . ( $sort_order ? "&sortorder=1" : "&sortorder=0" ) 
-        . ($grp_select == '' ? '' : "&g=" . urlencode($grp_select)) 
-        . ($dom_select == '' ? '' : "&d=" . urlencode($dom_select)) 
-        . ($row['org'] == '' ? '' : "&o=" . urlencode($row['org'])) 
-        . ($selectSPF == '' ? '' : "&spf=" . urlencode($selectSPF)) 
-        . ($selectDKIM == '' ? '' : "&dkim=" . urlencode($selectDKIM)) 
-        . ($per_select == '' ? '' : "&p=" . urlencode($per_select)) . "'"; 
-      $reportlist[] = "      <td class='center'>"
-        . "<a href='#" . $row['serial'] . "' id='" . $row['org'] ."' OnClick=\"$('#'+" . $row['serial'] . ").css('background-color', 'lightgrey'); reportData(" . -1 . ", $url);\">"
-        . $row['org']. "</a></td>";
-    } elseif ($grp_select == 'dom') {
-      $reportlist[] = "      <td class='center'>-</td>";
-    } else {
-      $reportlist[] = "      <td class='center'>". $row['org']. "</td>";
-    }
-    if ($grp_select == '') {
-      $url = "'?report=" . $row['serial']
-        . ( $host_lookup ? "&hostlookup=1" : "&hostlookup=0" ) 
-        . ( $sort_order ? "&sortorder=1" : "&sortorder=0" ) 
-        . ($grp_select == '' ? '' : "&g=" . urlencode($grp_select)) 
-        . ($dom_select == '' ? '' : "&d=" . urlencode($dom_select)) 
-        . ($org_select == '' ? '' : "&o=" . urlencode($org_select)) 
-        . ($selectSPF == '' ? '' : "&spf=" . urlencode($selectSPF)) 
-        . ($selectDKIM == '' ? '' : "&dkim=" . urlencode($selectDKIM)) 
-        . ($per_select == '' ? '' : "&p=" . urlencode($per_select)) . "'"; 
-      $reportlist[] = "      <td class='center'>"
-        . "<a href='#" . $row['serial'] . "' OnClick=\"reportData(" . $row['serial'] . ", $url);\">"
-        . $row['reportid']. "</a>"
-        . " <a href='#" . $row['serial'] . "' OnClick=\"showXML(" . $row['serial'] . ");\">"
-        . "<img alt='View Raw XML Report' class='view' src='./images/loupe2.png'></a></td>";
-    } else {
-      $reportlist[] = "      <td class='center'>-</td>";
-    }
-		$reportlist[] = "      <td class='center'>". number_format($row['rcount']+0,0). "</td>";
-		$reportlist[] = "    </tr>";
-		$reportsum += $row['rcount'];
   }
-  } # Fin du Contrôle si Tableau Vide
 	$reportlist[] = "<tr class='sum'><td></td><td></td><td></td><td></td><td class='right' style='text-align: right; border-right: 0;'>Sum:</td><td class='center'>".number_format($reportsum,0)."</td></tr>";
 	$reportlist[] = "  </tbody>";
 
@@ -185,15 +184,15 @@ function tmpl_reportData($reportnumber, $allowed_reports, $host_lookup = 1, $sor
 		$row = array_map('htmlspecialchars', $row);
     $reportdata[] = "<a id='rpt".$reportnumber."'></a>";
     if ($org_select == 'dom') {
-      $reportdata[] = "<div class='center reportdesc'><p> Report for ".$row['domain']."<br>(". format_date($first['mindate'], "r" ). " - ".format_date($row['maxdate'], "r" ).")<br> Policies: adkim=" . $row['policy_adkim'] . ", aspf=" . $row['policy_aspf'] .  ", p=" . $row['policy_p'] .  ", sp=" . $row['policy_sp'] .  ", pct=" . $row['policy_pct'] . "</p></div>";
+      $reportdata[] = "<div class='center reportdesc'><p> Report for ".$row['domain']."<br>(". format_date($first['mindate'], "Y-m-d H:i:s" ). " - ".format_date($row['maxdate'], "Y-m-d H:i:s" ).")<br> Policies: adkim=" . $row['policy_adkim'] . ", aspf=" . $row['policy_aspf'] .  ", p=" . $row['policy_p'] .  ", sp=" . $row['policy_sp'] .  ", pct=" . $row['policy_pct'] . "</p></div>";
     } else {
-      $reportdata[] = "<div class='center reportdesc'><p> Report from ".$row['org']." for ".$row['domain']."<br>(". format_date($first['mindate'], "r" ). " - ".format_date($row['maxdate'], "r" ).")<br> Policies: adkim=" . $row['policy_adkim'] . ", aspf=" . $row['policy_aspf'] .  ", p=" . $row['policy_p'] .  ", sp=" . $row['policy_sp'] .  ", pct=" . $row['policy_pct'] . "</p></div>";
+      $reportdata[] = "<div class='center reportdesc'><p> Report from ".$row['org']." for ".$row['domain']."<br>(". format_date($first['mindate'], "Y-m-d H:i:s" ). " - ".format_date($row['maxdate'], "Y-m-d H:i:s" ).")<br> Policies: adkim=" . $row['policy_adkim'] . ", aspf=" . $row['policy_aspf'] .  ", p=" . $row['policy_p'] .  ", sp=" . $row['policy_sp'] .  ", pct=" . $row['policy_pct'] . "</p></div>";
     }
   } elseif (isset($allowed_reports[BySerial][$reportnumber])) {
 		$row = $allowed_reports[BySerial][$reportnumber];
 		$row = array_map('htmlspecialchars', $row);
 		$reportdata[] = "<a id='rpt".$reportnumber."'></a>";
-		$reportdata[] = "<div class='center reportdesc'><p> Report from ".$row['org']." for ".$row['domain']."<br>(". format_date($row['mindate'], "r" ). " - ".format_date($row['maxdate'], "r" ).")<br> Policies: adkim=" . $row['policy_adkim'] . ", aspf=" . $row['policy_aspf'] .  ", p=" . $row['policy_p'] .  ", sp=" . $row['policy_sp'] .  ", pct=" . $row['policy_pct'] . "</p></div>";
+		$reportdata[] = "<div class='center reportdesc'><p> Report from ".$row['org']." for ".$row['domain']."<br>(". format_date($row['mindate'], "Y-m-d H:i:s" ). " - ".format_date($row['maxdate'], "Y-m-d H:i:s" ).")<br> Policies: adkim=" . $row['policy_adkim'] . ", aspf=" . $row['policy_aspf'] .  ", p=" . $row['policy_p'] .  ", sp=" . $row['policy_sp'] .  ", pct=" . $row['policy_pct'] . "</p></div>";
 	} else {
 		return "Unknown report number!<BR>";
 	}
