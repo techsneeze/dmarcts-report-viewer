@@ -1,24 +1,46 @@
-h1 {
-	text-align: center;
+body {
+	background-color: white;
 }
 
-.main {
+h1 {
+}
+
+.title {
+	font-size: 140%;
+	font-weight: bold;
+	text-align: center;
+	padding: 5px 0px;
 }
 
 table.reportlist {
-	margin: 2em auto 2em auto;
+	margin: auto;
 	border-collapse: collapse;
-  clear: both;
+	clear: both;
+	cursor: inherit;
 }
 
-table.reportlist td, table.reportlist th {
-	padding:3px;
+table.reportlist td {
+	padding:0px 10px;
 }
 
+table.reportlist th {
+        padding:3px;
+	position: -webkit-sticky; /* Safari */
+	position: sticky;
+	top: 0;
+	background-color: silver;
+	cursor: pointer;
+}
+
+/*
 table.reportlist thead {
 	border-top: 1px solid grey;
 	border-bottom: 1px solid grey;
+}
+*/
 
+table.reportlist tr:hover {
+	background-color: whitesmoke;
 }
 table.reportlist tbody tr:first-child td {
 	padding-top: 10px;
@@ -27,25 +49,57 @@ table.reportlist tr.sum {
 	border-top: 1px solid grey;
 }
 table.reportlist tr.selected {
-	background-color: lightgrey;
+	background-color: gainsboro;
 }
+
+table.reportlist td.hidden, table.reportlist th.hidden {
+	display: none;
+}
+
+table.reportlist tr {
+        cursor: pointer;
+/*		text-decoration: underline;
+		color: blue;*/
+}
+
 .reportdesc {
+	display:inline-block;
 	font-weight: bold;
+	padding: 1em 0;
+	margin: 0 auto;
+	
+}
+
+.reportdesc_container {
+/* 	display:inline-block; */
 	border-top: 2px solid grey;
-	width: 90%;
-	margin-left: auto;
-    margin-right: auto;
+	margin: 0 auto;
+	
 }
 
 table.reportdata {
-	margin: 2em auto 2em auto;
-	border-collapse: separate;
-	border-spacing: 2px;
+	margin: 0 auto;
+	border-collapse: collapse;
 }
 
-table.reportdata tr th, table.reportdata tr td {
+table.reportdata tr td {
 	text-align: center;
 	padding: 3px;
+	border: 2px solid white;
+	border-collapse: collapse;
+}
+
+table.reportdata tr th {
+	text-align: center;
+	padding: 3px;
+	border-collapse: collapse;
+	border: 2px solid white;
+	border-top: 0px solid black;
+	position: -webkit-sticky; /* Safari */
+	position: sticky;
+	top: 0px;
+	background-color: lightgray;
+	cursor:pointer;
 }
 
 table.reportdata tr.red {
@@ -68,58 +122,88 @@ table.reportdata tr.yellow {
 	font-size: 70%;
 	text-align: center;
 	border-top: 2px solid grey;
-	width: 90%;
-	margin: 2em auto 1em auto;
+	width: 100%;
+	margin: 10px auto 0px auto;
 	padding-top: 10px;
+	position: fixed;
+	bottom: 0;
+
 }
 
 .optionblock {
-  background: lightgrey;
-  padding: 0.4em;
+/*
+	background: lightgrey;
+	padding: 0.4em;
 	float: right;
 	margin: auto 2em 1em auto;
-  white-space: nowrap;
+*/
+      	white-space: nowrap;
+	overflow: auto;
+	font-size: 80%;
+	padding: .5em;
+    background-color: silver;
+    margin: auto;
+/*     width: 95%; */
+    text-align: center;
 }
 
 .optionlabel {
   font-weight: bold;
-  float: left; clear: left; 
-  margin-right: 1em;
+/*  
+	float: left; clear: left; 
+	margin-right: 1em;
+*/
 }
 
 .options {
-  font-size: 70%;
+	margin-right: .5em;
+  /*
+	font-size: 70%;
 	text-align: right;
-  border: none;
-  width: 97%;
-  padding: 0.4em;
+	border: none;
+	width: 97%;
+	padding: 0.4em;
+  */
+  display: inline-block;
+  border-right: 1px solid black;
+    padding-right: 1em;
 }
 
 .activated {
-  border: 0px solid black;
-  color: black;
-  background: lightgreen;
-  padding: 0.2em;
-  padding-right: 0.4em;
-  padding-left: 0.4em;
-  text-decoration: none;
+	border: 0px solid black;
+	color: black;
+	background: lightgreen;
+	padding: 0.2em;
+	padding-right: 0.4em;
+	padding-left: 0.4em;
+	text-decoration: none;
 }
 
 .deactivated {
-  border: 1px solid black;
-  color: black;
-  background: orange;
-  padding: 0.2em;
-  padding-right: 0.4em;
-  padding-left: 0.4em;
-  text-decoration: none;
+	border: 1px solid black;
+	color: black;
+	background: orange;
+	padding: 0.2em;
+	padding-right: 0.4em;
+	padding-left: 0.4em;
+	text-decoration: none;
 }
 .deactivated:hover {
-    background-color: yellow;
+	background-color: yellow;
 }
 
 .center {
 	text-align:center;
+}
+
+.right {
+	text-align:right;
+}
+
+.circle_black:before {
+	content: ' \25CF';
+	font-size: 25px;
+	color: #000000;
 }
 
 .circle_lime:before {
@@ -145,3 +229,16 @@ table.reportdata tr.yellow {
 	font-size: 25px;
 	color: #FFA500;
 }
+
+.asc_triangle:after {
+	content: ' \25B2';
+	font-size: 15px;
+/*	color: #000000; */
+}
+
+.desc_triangle:after {
+	content: ' \25BC';
+	font-size: 15px;
+/*	color: #000000; */
+}
+
