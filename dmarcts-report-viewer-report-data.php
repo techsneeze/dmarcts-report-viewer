@@ -81,8 +81,10 @@ function tmpl_reportData($reportnumber, $reports, $host_lookup = 1) {
 	$reportdata[] = "      <th title='" . $title_message . "'>Reason</th>";
 	$reportdata[] = "      <th title='" . $title_message . "'>DKIM<br />Domain</th>";
 	$reportdata[] = "      <th title='" . $title_message . "'>DKIM<br />Result</th>";
+	$reportdata[] = "      <th title='" . $title_message . "'>DKIM<br />Align</th>";
 	$reportdata[] = "      <th title='" . $title_message . "'>SPF<br />Domain</th>";
 	$reportdata[] = "      <th title='" . $title_message . "'>SPF<br />Result</th>";
+	$reportdata[] = "      <th title='" . $title_message . "'>SPF<br />Align</th>";
 // 	$reportdata[] = "      <th><img src='xml.png' id='xml_html_img' title='Show Raw Report XML' onclick='showXML()' style='float:left;'></th>";
 	$reportdata[] = "    </tr>";
 	$reportdata[] = "  </thead>";
@@ -121,8 +123,10 @@ function tmpl_reportData($reportnumber, $reports, $host_lookup = 1) {
 		$reportdata[] = "      <td>". $row['reason']. "</td>";
 		$reportdata[] = "      <td>". $row['dkimdomain']. "</td>";
 		$reportdata[] = "      <td>". $row['dkimresult']. "</td>";
+		$reportdata[] = "      <td>". $row['dkim_align']. "</td>";
 		$reportdata[] = "      <td>". $row['spfdomain']. "</td>";
 		$reportdata[] = "      <td>". $row['spfresult']. "</td>";
+		$reportdata[] = "      <td>". $row['spf_align']. "</td>";
 		$reportdata[] = "    </tr>";
 
 		$reportsum += $row['rcount'];

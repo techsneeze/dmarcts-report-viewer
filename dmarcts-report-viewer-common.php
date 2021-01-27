@@ -48,7 +48,7 @@ function get_status_color($row) {
     if (($row['dkimresult'] == "fail") && ($row['spfresult'] == "fail")) {
 	    $status="red";
 		$status_num="4";
-    } elseif (($row['dkimresult'] == "fail") || ($row['spfresult'] == "fail")) {
+    } elseif (($row['dkimresult'] == "fail") || ($row['spfresult'] == "fail") || ($row['dkim_align'] == "fail") || ($row['spf_align'] == "fail")) {
 	    $status="orange";
 	    $status_num="3";
     } elseif (($row['dkimresult'] == "pass") && ($row['spfresult'] == "pass")) {
