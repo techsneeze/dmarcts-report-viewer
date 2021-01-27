@@ -45,10 +45,7 @@ function main() {
 function get_status_color($row) {
 	$status = "";
 	$status_num = "";
-    if (($row['disposition'] == "reject") || ($row['disposition'] == "quarantine")) {
-      $status="red";
-      $status_num="4";
-    } elseif (($row['dkimresult'] == "fail") && ($row['spfresult'] == "fail")) {
+    if (($row['dkimresult'] == "fail") && ($row['spfresult'] == "fail")) {
 	    $status="red";
 		$status_num="4";
     } elseif (($row['dkimresult'] == "fail") || ($row['spfresult'] == "fail") || ($row['dkim_align'] == "fail") || ($row['spf_align'] == "fail")) {
