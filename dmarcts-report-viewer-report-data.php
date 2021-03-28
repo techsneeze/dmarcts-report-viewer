@@ -29,8 +29,8 @@
 // for your database authentication and location.
 //
 // Edit the configuration variables in dmarcts-report-viewer.js with your preferences.
-// 
-// 
+//
+//
 //####################################################################
 //### functions ######################################################
 //####################################################################
@@ -40,14 +40,14 @@ function tmpl_reportData($reportnumber, $reports, $host_lookup = 1) {
 	global $dmarc_where;
 
 	$title_message = "Click to toggle sort direction by this column";
-	
+
 	if (!$reportnumber) {
 		return "";
 	}
 
 	$reportdata[] = "";
 	$reportdata[] = "<script type=\"text/javascript\">sorttable();</script>";
-    
+
 //     $reportdata[] = "<!-- Start of report data -->";
 	$reportsum    = 0;
 
@@ -68,11 +68,11 @@ function tmpl_reportData($reportnumber, $reports, $host_lookup = 1) {
 		return "Unknown report number!";
 	}
 
-	$reportdata[] = "<div id='report_data_xml' style='display:none; float:right; overflow-y:auto; resize: vertical; text-align:left;'>";
+	$reportdata[] = "<div id='report_data_xml' style='display:none; float:right; overflow-y:auto; border-left: 2px solid gray; text-align:left;'>";
 	$reportdata[] =  "<pre lang=\"xml\">" . $row['raw_xml'] . "</pre>";
 	$reportdata[] = "</div>";
 
-	$reportdata[] = "<div id='report_data_table_div' style='overflow-y:auto; resize: both;'>";
+	$reportdata[] = "<div id='report_data_table_div' style='overflow-y:auto;'>";
 	$reportdata[] = "<table id='report_data_table' class='reportdata'>";
 	$reportdata[] = "  <thead>";
 	$reportdata[] = "    <tr>";
@@ -133,7 +133,7 @@ function tmpl_reportData($reportnumber, $reports, $host_lookup = 1) {
 	$reportdata[] = "<tr><td></td><td class='right'>Sum:</td><td>$reportsum</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 	$reportdata[] = "</table>";
 
-	$reportdata[] = "</div>"; 
+	$reportdata[] = "</div>";
 
 
 	$reportdata[] = "";
