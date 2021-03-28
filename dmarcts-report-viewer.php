@@ -55,11 +55,13 @@ function html ($default_hostlookup = 1, $default_dmarc_result = undef, $default_
 // 	$html[] = "  <body id='body' onload=showReportlist('reportlistTbl');makeResizableDiv();>";
 
 
-	//	Optionblock form
+	//	Resizer handles
 	//	--------------------------------------------------------------------------
 	$html[] = "<div id='resizer_horizontal' class='resizer resizer_horizontal'></div>";
 	$html[] = "<div id='resizer_vertical' class='resizer resizer_vertical'></div>";
 
+	//	Optionblock form
+	//	--------------------------------------------------------------------------
 	$html[] = "    <div id='optionblock' class='optionblock'><form action=\"?\" method=\"post\">";
 
 
