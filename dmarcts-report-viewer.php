@@ -29,7 +29,7 @@
 // for your database authentication and location.
 //
 // Edit the configuration variables in dmarcts-report-viewer.js with your preferences.
-// 
+//
 //####################################################################
 //### functions ######################################################
 //####################################################################
@@ -163,7 +163,7 @@ function html ($default_hostlookup = 1, $default_dmarc_result = undef, $default_
 
 	//	Page Footer
 	//	--------------------------------------------------------------------------
-	$html[] = "  <div id='footer' class='footer'>&copy; 2016-2020 by <a href='http://www.techsneeze.com'>TechSneeze.com</a>, John Bieling and <a href='mailto:dmarcts-report-viewer@hazelden.ca'>John P. New</a>. <span id='icons' style='display:none;'> XML/HTML Icons made by <a href=\"https://smashicons.com/\" title=\"Smashicons\">Smashicons</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\"> www.flaticon.com</a></span></div>";
+	$html[] = "  <div id='footer' class='footer'>&copy; 2016-2020 by <a href='http://www.techsneeze.com'>TechSneeze.com</a>, John Bieling and <a href='mailto:dmarcts-report-viewer@hazelden.ca'>John P. New</a></div>";
 	$html[] = "  </body>";
 	$html[] = "</html>";
 
@@ -222,14 +222,14 @@ while($row = $query->fetch_assoc()) {
 
 // Generate Page with report list and report data (if a report is selected).
 // --------------------------------------------------------------------------
-echo html( 
-	$default_hostlookup, 
+echo html(
+	$default_hostlookup,
 	$default_dmarc_result,
 	$default_domain,
 	$default_reporter,
-	$cssfile, 
-	$domains, 
-	$orgs, 
+	$cssfile,
+	$domains,
+	$orgs,
 	$periods
 );
 ?>
