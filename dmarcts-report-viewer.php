@@ -29,7 +29,7 @@
 // for your database authentication and location.
 //
 // Edit the configuration variables in dmarcts-report-viewer.js with your preferences.
-// 
+//
 //####################################################################
 //### functions ######################################################
 //####################################################################
@@ -51,12 +51,15 @@ function html ($default_hostlookup = 1, $default_dmarc_result = undef, $default_
 	$html[] = "    <meta http-equiv=\"Content-Language\" content=\"en_US\" />";
 	$html[] = "  </head>";
 
-	$html[] = "  <body id='body' onload=showReportlist('reportlistTbl');>";
+	$html[] = "  <body id='body' onload=showReportlist('reportlistTbl');set_heights(); onresize=showResizers();>";
 // 	$html[] = "  <body id='body' onload=showReportlist('reportlistTbl');makeResizableDiv();>";
 
 
 	//	Optionblock form
 	//	--------------------------------------------------------------------------
+	$html[] = "<div id='resizer_horizontal' class='resizer resizer_horizontal'></div>";
+	$html[] = "<div id='resizer_vertical' class='resizer resizer_vertical'></div>";
+
 	$html[] = "    <div id='optionblock' class='optionblock'><form action=\"?\" method=\"post\">";
 
 
@@ -152,7 +155,7 @@ function html ($default_hostlookup = 1, $default_dmarc_result = undef, $default_
 	//	--------------------------------------------------------------------------
 	$html[] = "<!-- Start of report list -->";
 	$html[] = "<div id='title' class='title'>DMARC Reports</div>";
-	$html[] = "<div id='report_list' style='overflow-y:auto; resize: vertical;'>";
+	$html[] = "<div id='report_list' style='overflow-y:auto;'>";
 	$html[] = "</div>";
 	$html[] = "<!-- End of report list -->";
 
@@ -222,14 +225,14 @@ while($row = $query->fetch_assoc()) {
 
 // Generate Page with report list and report data (if a report is selected).
 // --------------------------------------------------------------------------
-echo html( 
-	$default_hostlookup, 
+echo html(
+	$default_hostlookup,
 	$default_dmarc_result,
 	$default_domain,
 	$default_reporter,
-	$cssfile, 
-	$domains, 
-	$orgs, 
+	$cssfile,
+	$domains,
+	$orgs,
 	$periods
 );
 ?>
