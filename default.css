@@ -1,5 +1,6 @@
 body {
 	background-color: white;
+	overflow: hidden;
 }
 
 h1 {
@@ -127,7 +128,7 @@ table.reportdata tr.yellow {
 	padding-top: 10px;
 	position: fixed;
 	bottom: 0;
-
+	background-color: white;
 }
 
 .optionblock {
@@ -242,3 +243,24 @@ table.reportdata tr.yellow {
 /*	color: #000000; */
 }
 
+.resizer {
+	display: none;
+	position: absolute;
+	border-radius: 7px;
+	background: white;
+	border: 2px solid gray;
+	top: 8px;
+	left: 50%;
+}
+
+.resizer_horizontal {
+	width: 30px;
+	height: 10px;
+	cursor: ns-resize;
+}
+
+.resizer_vertical {
+	width: 10px;
+	height: 30px;
+	cursor: ew-resize;
+}
