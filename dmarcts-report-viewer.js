@@ -159,7 +159,8 @@ function showXML() {
 		document.getElementById('report_data_table_div').style.display = 'inline-block';
 		document.getElementById('report_data_table_div').style.float = 'left';
 		document.getElementById('xml_html_img').src = 'html.png';
-		document.getElementById('xml_html_img').title = 'Show Report Table';
+		document.getElementById('xml_html_img').title = 'Hide Raw Report XML';
+		document.getElementById('xml_html_img').alt = 'Hide Raw Report XML';
 	} else {
 		var div_height = document.getElementById('report_data_xml').style.height
 		document.getElementById('report_data_xml').style.display = 'none';
@@ -167,6 +168,7 @@ function showXML() {
 		document.getElementById('report_data_table_div').style.float = '';
 		document.getElementById('xml_html_img').src = 'xml.png';
 		document.getElementById('xml_html_img').title = 'Show Raw Report XML';
+		document.getElementById('xml_html_img').alt = 'Show Raw Report XML';
 	}
 	set_report_data_widths();
 }
@@ -222,7 +224,6 @@ function showReport(str) {
 				set_report_data_heights();
 				document.getElementsByTagName("HTML")[0].style.cursor = "default";
 				document.getElementById('reportlistTbl').querySelectorAll('tr').forEach(tr => tr.style.cursor = "pointer");
-				document.getElementById("icons").style.display = "";
 			}
 		};
 
