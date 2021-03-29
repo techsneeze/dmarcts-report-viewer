@@ -256,7 +256,6 @@ function showReport(str) {
 				if ( typeof report_data_xml_width !== 'undefined' && report_data_xml_width > 0 ) {
 					showXML("open_xml");
 				}
-
 			}
 		}
 

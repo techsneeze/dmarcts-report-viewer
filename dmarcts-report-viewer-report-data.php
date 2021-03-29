@@ -60,7 +60,7 @@ function tmpl_reportData($reportnumber, $reports, $host_lookup = 1) {
 		$reportdata[] = "<div id='report_desc_container' class='center reportdesc_container'>";
 		$reportdata[] = "<div id='report_desc' class='center reportdesc'>Report from ".$row['org']." for ".$row['domain']."<br>(". format_date($row['mindate'], "r" ). " - ".format_date($row['maxdate'], "r" ).")<br> Policies: adkim=" . $row['policy_adkim'] . ", aspf=" . $row['policy_aspf'] .  ", p=" . $row['policy_p'] .  ", sp=" . $row['policy_sp'] .  ", pct=" . $row['policy_pct'] . "</div>";
 
-		$reportdata[] = "<div style='display:inline-block;margin-left:20px;'><img src='xml.png' id='xml_html_img' title='Show Raw Report XML' onclick='showXML()'></div>";
+		$reportdata[] = "<div style='display:inline-block;margin-left:20px;'><img src='xml.png' id='xml_html_img' width='30px' alt='Show Raw Report XML' title='Show Raw Report XML' onclick='showXML()'></div>";
 
 		$reportdata[] = "</div>";
 
