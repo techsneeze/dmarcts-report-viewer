@@ -60,7 +60,7 @@ function tmpl_reportData($reportnumber, $reports, $host_lookup = 1) {
 		$reportdata[] = "<div id='report_desc_container' class='center reportdesc_container'>";
 		$reportdata[] = "<div id='report_desc' class='center reportdesc'>Report from ".$row['org']." for ".$row['domain']."<br>(". format_date($row['mindate'], "r" ). " - ".format_date($row['maxdate'], "r" ).")<br> Policies: adkim=" . $row['policy_adkim'] . ", aspf=" . $row['policy_aspf'] .  ", p=" . $row['policy_p'] .  ", sp=" . $row['policy_sp'] .  ", pct=" . $row['policy_pct'] . "</div>";
 
-		$reportdata[] = "<div style='display:inline-block;margin-left:20px;'><img src='xml.png' id='xml_html_img' width='30px' alt='Show Raw Report XML' title='Show Raw Report XML' onclick='showXML()'></div>";
+		$reportdata[] = "<div id='xml_html_img'><img src='xml.png' id='xml_html_img' width='30px' alt='Show Raw Report XML' title='Show Raw Report XML' onclick='showXML()'></div>";
 
 		$reportdata[] = "</div>";
 
@@ -68,11 +68,11 @@ function tmpl_reportData($reportnumber, $reports, $host_lookup = 1) {
 		return "Unknown report number!";
 	}
 
-	$reportdata[] = "<div id='report_data_xml' style='display:none; float:right; overflow-y:auto; border-left: 2px solid gray; text-align:left;'>";
+	$reportdata[] = "<div id='report_data_xml' style='display: none;'>";
 	$reportdata[] =  "<pre lang=\"xml\">" . $row['raw_xml'] . "</pre>";
 	$reportdata[] = "</div>";
 
-	$reportdata[] = "<div id='report_data_table_div' style='overflow-y:auto;'>";
+	$reportdata[] = "<div id='report_data_table_div'>";
 	$reportdata[] = "<table id='report_data_table' class='reportdata'>";
 	$reportdata[] = "  <thead>";
 	$reportdata[] = "    <tr>";
@@ -85,7 +85,6 @@ function tmpl_reportData($reportnumber, $reports, $host_lookup = 1) {
 	$reportdata[] = "      <th title='" . $title_message . "'>DKIM<br />Result</th>";
 	$reportdata[] = "      <th title='" . $title_message . "'>SPF<br />Domain</th>";
 	$reportdata[] = "      <th title='" . $title_message . "'>SPF<br />Result</th>";
-// 	$reportdata[] = "      <th><img src='xml.png' id='xml_html_img' title='Show Raw Report XML' onclick='showXML()' style='float:left;'></th>";
 	$reportdata[] = "    </tr>";
 	$reportdata[] = "  </thead>";
 

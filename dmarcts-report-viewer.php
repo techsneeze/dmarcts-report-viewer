@@ -157,12 +157,12 @@ function html ($default_hostlookup = 1, $default_dmarc_result = undef, $default_
 	//	--------------------------------------------------------------------------
 	$html[] = "<!-- Start of report list -->";
 	$html[] = "<div id='title' class='title'>DMARC Reports</div>";
-	$html[] = "<div id='report_list' style='overflow-y:auto;'>";
+	$html[] = "<div id='report_list'>";
 	$html[] = "</div>";
 	$html[] = "<!-- End of report list -->";
 
 	$html[] = "<!-- Start of report data -->";
-	$html[] = "<div id='report_data' style='text-align:center;'>";
+	$html[] = "<div id='report_data'>";
 	$html[] = "</div>";
 	$html[] = "<!-- End of report data -->";
 

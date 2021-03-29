@@ -13,6 +13,10 @@ h1 {
 	padding: 5px 0px;
 }
 
+#report_list {
+	 overflow-y: auto;
+}
+
 table.reportlist {
 	margin: auto;
 	border-collapse: collapse;
@@ -63,19 +67,34 @@ table.reportlist tr {
 		color: blue;*/
 }
 
+#report_data {
+	 text-align: center;
+}
+
 .reportdesc {
-	display:inline-block;
+	display: inline-block;
 	font-weight: bold;
 	padding: 1em 0;
 	margin: 0 auto;
-	
 }
 
 .reportdesc_container {
 /* 	display:inline-block; */
 	border-top: 2px solid grey;
 	margin: 0 auto;
-	
+}
+
+div#xml_html_img {
+	 display: inline-block;
+	 margin-left: 20px;
+}
+
+img#xml_html_img {
+	 width: 30px;
+}
+
+#report_data_table_div {
+	 overflow-y: auto;
 }
 
 table.reportdata {
@@ -119,6 +138,14 @@ table.reportdata tr.yellow {
 	background-color: #FFFF00;
 }
 
+ #report_data_xml {
+	 float: right;
+	 padding-left: 10px;
+	 overflow-y: auto;
+	 border-left: 2px solid gray;
+	 text-align: left;
+}
+
 .footer {
 	font-size: 70%;
 	text-align: center;
@@ -150,8 +177,8 @@ table.reportdata tr.yellow {
 
 .optionlabel {
   font-weight: bold;
-/*  
-	float: left; clear: left; 
+/*
+	float: left; clear: left;
 	margin-right: 1em;
 */
 }
@@ -194,7 +221,7 @@ table.reportdata tr.yellow {
 }
 
 .center {
-	text-align:center;
+	text-align: center;
 }
 
 .right {
