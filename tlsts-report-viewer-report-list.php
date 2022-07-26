@@ -243,7 +243,9 @@ if( $org_select <> '' ) {
 if( $per_select <> '' ) {
 	$ye = substr( $per_select, 0, 4) + 0;
 	$mo = substr( $per_select, 5, 2) + 0;
-	$where .= ( $where <> '' ? " AND" : " WHERE" ) . " ((year(mindate) = $ye AND month(mindate) = $mo) OR (year(maxdate) = $ye AND month(maxdate) = $mo)) ";
+	$where .= ( $where <> '' ? " AND" : " WHERE" )
+			. " ((extract(year from mindate) = $ye AND extract(month from mindate) = $mo) "
+			. "  OR (extract(year from maxdate) = $ye AND extract(month from maxdate) = $mo)) ";
 }
 
 // Include the rcount via left join, so we do not have to make an sql query
