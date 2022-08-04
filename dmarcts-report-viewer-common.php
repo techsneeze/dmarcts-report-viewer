@@ -69,6 +69,32 @@ $dmarc_result = array(
 	),
 );
 
+// The order in which the options appear here is the order they appear in the TLS-RPT Report Status dropdown box
+$tls_result = array(
+
+	'TLS_PASS' => array(
+		'text' => 'Pass',
+		'status_text' => 'All Passed',
+		'color' => 'green',
+		'status_sort_key' => 3,
+		'status_sql_where' => " summary_successful > 0 AND summary_failure = 0",
+	),
+	'TLS_FAIL' => array(
+		'text' => 'Fail',
+		'status_text' => 'All Failed',
+		'color' => 'red',
+		'status_sort_key' => 0,
+		'status_sql_where' => " summary_successful = 0 AND summary_failure > 0",
+	),
+	'TLS_PASS_AND_FAIL' => array(
+		'text' => 'Mixed',
+		'status_text' => 'Mixed result',
+		'color' => 'orange',
+		'status_sort_key' => 1,
+		'status_sql_where' => " summary_successful > 0 AND summary_failure > 0",
+	),
+);
+
 // Sortable Report List column headers
 // --------------------------------------------------------------------------
 // Array to be used in 'Default sort column' option in dmarcts-report-viewer-options.php
@@ -320,6 +346,34 @@ function get_report_status($row) {
 	}
 
 	return array('color' => $color, 'status_sort_key' => $color_sort_key, 'status_text' => $status_text);
+}
+
+// This function sets variables for the TLS-RPT Result in the Report List
+function get_tls_result($row) {
+
+		global $tls_result;
+		$color = "";
+		$color_sort_key = "";
+		$result_text = "";
+
+		if (($row['summary_successful'] == 0) && ($row['summary_failure'] > 0)) {
+			$color     = $tls_result['TLS_FAIL']['color'];
+			$color_sort_key = $tls_result['TLS_FAIL']['status_sort_key'];
+			$result_text = $tls_result['TLS_FAIL']['text'];
+		} elseif (($row['summary_successful'] > 0) && ($row['summary_failure'] > 0)) {
+			$color     = $tls_result['TLS_PASS_AND_FAIL']['color'];
+			$color_sort_key = $tls_result['TLS_PASS_AND_FAIL']['status_sort_key'];
+			$result_text = $tls_result['TLS_PASS_AND_FAIL']['text'];
+		} elseif (($row['summary_successful'] > 0) && ($row['summary_failure'] == 0)) {
+			$color     = $tls_result['TLS_PASS']['color'];
+			$color_sort_key = $tls_result['TLS_PASS']['status_sort_key'];
+			$result_text = $tls_result['TLS_PASS']['text'];
+		} else {
+			$color     = $tls_result['TLS_OTHER_CONDITION']['color'];
+			$color_sort_key = $tls_result['TLS_OTHER_CONDITION']['status_sort_key'];
+			$result_text = $tls_result['TLS_OTHER_CONDITION']['text'];
+		}
+		return array('color' => $color, 'status_sort_key' => $color_sort_key, 'result' => $result_text);
 }
 
 // This function sets variables for individual cells in the Report Data table

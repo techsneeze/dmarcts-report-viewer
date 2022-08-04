@@ -36,7 +36,7 @@
 
 function html ($domains = array(), $orgs = array(), $periods = array() ) {
 
-	global $dmarc_result;
+	global $tls_result;
 
 	global $options;
 	global $cookie_options;
@@ -44,7 +44,7 @@ function html ($domains = array(), $orgs = array(), $periods = array() ) {
 	$html[] = "<!DOCTYPE html>";
 	$html[] = "<html>";
 	$html[] = "  <head>";
-	$html[] = "    <title>DMARC Report Viewer</title>";
+	$html[] = "    <title>TLS Report Viewer</title>";
 	$html[] = "    <link rel='stylesheet' href='" . $cookie_options['cssfile'] . "'>";
 	$html[] = "    <script src='dmarcts-report-viewer.js'></script>";
 
@@ -59,14 +59,14 @@ function html ($domains = array(), $orgs = array(), $periods = array() ) {
 	$html[] = "      var xml_data_open = " . $cookie_options['xml_data_open'] . ";";
 	$html[] = "      var xml_data_highlight = " . $cookie_options['xml_data_highlight'] . ";";
 	$html[] = "      var xml_data_hljs = " . $cookie_options['xml_data_hljs'] . ";";
-	$html[] = "      var report_type = 'dmarc';";
+	$html[] = "      var report_type = 'tls';";
 	$html[] = "    </script>";
 	$html[] = "    <meta charset=\"UTF-8\" />";
 	$html[] = "    <meta name='google' content='notranslate' />";
 	$html[] = "    <meta http-equiv=\"Content-Language\" content=\"en_US\" />";
 	$html[] = "  </head>";
 
-	$html[] = "  <body id='body' onload=showReportlist('dmarc'); onresize=showResizers();>";
+	$html[] = "  <body id='body' onload=showReportlist('tls'); onresize=showResizers();>";
 	$html[] = "<div id='screen_overlay' onclick=\"hideMenu();\" style=\"top: 0;left: 0;height: 100%;width: 100%;position: absolute;display: none;z-index: 1;\">
     ";
 	$html[] = "</div>";
@@ -89,43 +89,43 @@ function html ($domains = array(), $orgs = array(), $periods = array() ) {
 	$html[] = "		</div>";
 
 
-	// 	DMARC select
+	// // 	DMARC select
+	// // 	--------------------------------------------------------------------------
+	// 	$html[] = "<div class='options'><span class='optionlabel'>DMARC Result:</span><br>";
+	// 	$html[] = "<select class='x-css' name=\"DMARC\" id=\"selDMARC\" onchange=\"showReportlist('tls')\">";
+	// 	$html[] = "<option " . ( $cookie_options['DMARC'] ? "" : "selected=\"selected\" " ) . "value=\"all\">[all]</option>";
+	// 	foreach($dmarc_result as $key => $value) {
+	// 		$html[] = sprintf("<option class='" . $value['color'] . "' %s value=\"%s\">%s</option>",
+	// 				$cookie_options['DMARC'] == $key ? "selected=\"selected\"" : "",
+	// 				$key,
+	// 				$value['text']
+	// 			);
+	// 	}
+	// 	$html[] = "</select>";
+	// 	$html[] = "</div>";
+	//
+	//
+	// 	Report Status select
 	// 	--------------------------------------------------------------------------
-		$html[] = "<div class='options'><span class='optionlabel'>DMARC Result:</span><br>";
-		$html[] = "<select class='x-css' name=\"DMARC\" id=\"selDMARC\" onchange=\"showReportlist('dmarc')\">";
-		$html[] = "<option " . ( $cookie_options['DMARC'] ? "" : "selected=\"selected\" " ) . "value=\"all\">[all]</option>";
-		foreach($dmarc_result as $key => $value) {
-			$html[] = sprintf("<option class='" . $value['color'] . "' %s value=\"%s\">%s</option>",
-					$cookie_options['DMARC'] == $key ? "selected=\"selected\"" : "",
+		$html[] = "<div class='options'><span class='optionlabel'>Report Status:</span><br>";
+		$html[] = "<select class='x-css' name=\"ReportStatus\" id=\"selReportStatus\" onchange=\"showReportlist('tls')\">";
+		$html[] = "<option " . ( $cookie_options['ReportStatus'] ? "" : "selected=\"selected\" " ) . "value=\"all\">[all]</option>";
+		foreach($tls_result as $key => $value) {
+			$html[] = sprintf("<option class='color: " . $value['color'] . "' %s value=\"%s\">%s</option>",
+					$cookie_options['ReportStatus'] == $key ? "selected=\"selected\"" : "",
 					$key,
-					$value['text']
+					$value['status_text']
 				);
 		}
 		$html[] = "</select>";
 		$html[] = "</div>";
 
 
-		// 	Report Status select
-		// 	--------------------------------------------------------------------------
-			$html[] = "<div class='options'><span class='optionlabel'>Report Status:</span><br>";
-			$html[] = "<select class='x-css' name=\"ReportStatus\" id=\"selReportStatus\" onchange=\"showReportlist('dmarc')\">";
-			$html[] = "<option " . ( $cookie_options['ReportStatus'] ? "" : "selected=\"selected\" " ) . "value=\"all\">[all]</option>";
-			foreach($dmarc_result as $key => $value) {
-				$html[] = sprintf("<option class='color: " . $value['color'] . "' %s value=\"%s\">%s</option>",
-						$cookie_options['ReportStatus'] == $key ? "selected=\"selected\"" : "",
-						$key,
-						$value['status_text']
-					);
-			}
-			$html[] = "</select>";
-			$html[] = "</div>";
-
-
 	// 	Period select
 	// 	--------------------------------------------------------------------------
 	if ( count( $periods ) > 0 ) {
 		$html[] = "<div class='options'><span class='optionlabel'>Month:</span><br>";
-		$html[] = "<select class='x-css' name=\"Period\" id=\"selPeriod\" onchange=\"showReportlist('dmarc')\">";
+		$html[] = "<select class='x-css' name=\"Period\" id=\"selPeriod\" onchange=\"showReportlist('tls')\">";
 		$html[] = "<option value=\"all\"" . ($cookie_options['Period'] ? "" : " selected=\"selected\"") . ">[all]</option>";
 
 		for ($p = 0; $p < sizeof($periods); $p++) {
@@ -145,7 +145,7 @@ function html ($domains = array(), $orgs = array(), $periods = array() ) {
 	//	--------------------------------------------------------------------------
 	if ( count( $domains ) >= 1 ) {
 		$html[] = "<div class='options'><span class='optionlabel'>Domain(s):</span><br>";
-		$html[] = "<select class='x-css' name=\"Domain\" id=\"selDomain\" onchange=\"showReportlist('dmarc')\">";
+		$html[] = "<select class='x-css' name=\"Domain\" id=\"selDomain\" onchange=\"showReportlist('tls')\">";
 		$html[] = "<option " . ( $cookie_options['Domain'] ? "" : "selected=\"selected\" " ) . "value=\"all\">[all]</option>";
 
 		foreach( $domains as $d) {
@@ -161,7 +161,7 @@ function html ($domains = array(), $orgs = array(), $periods = array() ) {
 	//	--------------------------------------------------------------------------
 	if ( count( $orgs ) > 0 ) {
 		$html[] = "<div class='options'><span class='optionlabel'>Reporter(s):</span><br>";
-		$html[] = "<select class='x-css' name=\"Organisation\" id=\"selOrganisation\" onchange=\"showReportlist('dmarc')\">";
+		$html[] = "<select class='x-css' name=\"Organisation\" id=\"selOrganisation\" onchange=\"showReportlist('tls')\">";
 		$html[] = "<option " . ( $cookie_options['Organisation'] ? "" : "selected=\"selected\" " ) . "selected=\"selected\" value=\"all\">[all]</option>";
 
 		foreach( $orgs as $o) {
@@ -195,13 +195,13 @@ function html ($domains = array(), $orgs = array(), $periods = array() ) {
 
 	// Dropdown menu
 	//	--------------------------------------------------------------------------
-	$html[] = "<div id='menu' class='menu top'><div class='menu_option' style='border-bottom: 1px solid var(--header);' onclick=\"window.location.href = 'tlsts-report-viewer.php';\">&nbsp;&nbsp;&nbsp;Go to TLS Reports</div><div class='menu_option' onclick=\"build_cookie();\">&nbsp;&nbsp;&nbsp;Save Current Settings as Initial View</div><div class='menu_option' onclick=\"window.location.href = 'dmarcts-report-viewer-options.php';\">&nbsp;&nbsp;&nbsp;DMARC Report Options...</div></div>";
+	$html[] = "<div id='menu' class='menu top'><div class='menu_option' style='border-bottom: 1px solid var(--header);' onclick=\"window.location.href = 'dmarcts-report-viewer.php';\">&nbsp;&nbsp;&nbsp;Go to DMARC Reports</div><div class='menu_option' onclick=\"build_cookie();\">&nbsp;&nbsp;&nbsp;Save Current Settings as Initial View</div><div class='menu_option' onclick=\"window.location.href = 'dmarcts-report-viewer-options.php';\">&nbsp;&nbsp;&nbsp;TLS Report Options...</div></div>";
 
 
 	//	Report divs
 	//	--------------------------------------------------------------------------
 	$html[] = "<!-- Start of report list -->";
-	$html[] = "<div id='title' class='title'>DMARC Reports</div>";
+	$html[] = "<div id='title' class='title'>TLS Reports</div>";
 	$html[] = "<div id='report_list' style='overflow-y:auto;'>";
 	$html[] = "</div>";
 	$html[] = "<!-- End of report list -->";
@@ -245,7 +245,7 @@ $sql = "
 SELECT DISTINCT
 	domain
 FROM
-	report
+	tls_report
 ORDER BY
 	domain
 ";
@@ -262,7 +262,7 @@ $sql = "
 SELECT DISTINCT
 	org
 FROM
-	report
+	tls_report
 ORDER BY
 	org
 ";
@@ -281,7 +281,7 @@ $sql = "
 		EXTRACT(YEAR FROM mindate) AS year,
 		EXTRACT(MONTH FROM mindate) AS month
 	FROM
-		report
+		tls_report
 )
 UNION
 (
@@ -289,7 +289,7 @@ UNION
 		EXTRACT(YEAR FROM mindate) AS year,
 		EXTRACT(MONTH FROM mindate) AS month
 	FROM
-		report
+		tls_report
 )
 ORDER BY
 	year DESC,
@@ -313,7 +313,6 @@ if(!isset($orgs)){
 if(!isset($periods)){
         $periods = array();
 }
-
 
 // Generate Page with report list and report data (if a report is selected).
 // --------------------------------------------------------------------------

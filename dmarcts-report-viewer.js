@@ -59,7 +59,7 @@ function reset_report_list() {
 // Function to refesh the data shown in the report_list_table using the currently selected <select> filters.
 function refresh_report_list() {
 
-	showReportlist('reportlistTbl');
+	showReportlist(report_type);
 }
 
 
@@ -89,7 +89,7 @@ function sorttable (table_id) {
 	}
 }
 
-function showReportlist(str) { // str is the name of the <div> to be filled
+function showReportlist(report_type) { // str is the name of the <div> to be filled
 
 	// Clear current reportid because Report List is being reset
 	current_report = "";
@@ -99,14 +99,19 @@ function showReportlist(str) { // str is the name of the <div> to be filled
 	var domain = document.getElementById('selDomain').options[document.getElementById('selDomain').selectedIndex].value;
 	var org = document.getElementById('selOrganisation').options[document.getElementById('selOrganisation').selectedIndex].value;
 	var period = document.getElementById('selPeriod').options[document.getElementById('selPeriod').selectedIndex].value;
-	var dmarc = document.getElementById('selDMARC').options[document.getElementById('selDMARC').selectedIndex].value;
 	var report_status = document.getElementById('selReportStatus').options[document.getElementById('selReportStatus').selectedIndex].value;
 
 	GETstring += "d=" + domain;
 	GETstring += "&o=" + org;
 	GETstring += "&p=" + period;
-	GETstring += "&dmarc=" + dmarc;
 	GETstring += "&rptstat=" + report_status;
+
+	if (report_type == "dmarc") {
+		var dmarc = document.getElementById('selDMARC').options[document.getElementById('selDMARC').selectedIndex].value;
+		GETstring += "&dmarc=" + dmarc;
+	} else if (report_type == "tls") {
+				// var tls = document.getElementById('selTLS').options[document.getElementById('selTLS').selectedIndex].value;
+	}
 
 	xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange =
@@ -115,13 +120,13 @@ function showReportlist(str) { // str is the name of the <div> to be filled
 				document.getElementById("report_list").innerHTML = this.responseText;
 				document.getElementById("report_data").innerHTML = "";
 				set_heights();
-				sorttable(str);
+				sorttable('reportlistTbl');
 				set_title(domain);
 				makeResizableDiv();
 			}
 		};
 
-	xhttp.open("GET", "dmarcts-report-viewer-report-list.php" + GETstring, true);
+	xhttp.open("GET", report_type + "ts-report-viewer-report-list.php" + GETstring, true);
 	xhttp.send();
 }
 
@@ -159,7 +164,7 @@ function change_stylesheet() {
 
 function set_title(domain) {
 
-	domain == 'all' ? document.getElementById('title').innerText = "DMARC Reports" : document.getElementById('title').innerText = "DMARC Reports for " + domain;
+	domain == 'all' ? document.getElementById('title').innerText = report_type.toUpperCase() + " Reports" : document.getElementById('title').innerText = report_type.toUpperCase() + " Reports for " + domain;
 }
 
 function set_heights() {
@@ -263,8 +268,13 @@ function set_report_data_widths () {
 		document.getElementById('report_data_table_div').style.display = 'inline-block';
 		document.getElementById('report_data_table_div').style.float = 'left';
 		document.getElementById('xml_html_img').src = 'html.png';
-		document.getElementById('xml_html_img').title = 'Hide Raw Report XML';
-		document.getElementById('xml_html_img').alt = 'Hide Raw Report XML';
+		if (report_type == 'dmarc') {
+			document.getElementById('xml_html_img').title = 'Hide Raw Report XML';
+			document.getElementById('xml_html_img').alt = 'Hide Raw Report XML';
+		} else {
+			document.getElementById('xml_html_img').title = 'Hide Raw Report JSON';
+			document.getElementById('xml_html_img').alt = 'Hide Raw Report JSON';
+		}
 		document.getElementById('resizer_vertical').style.display = "block";
 	} else {
 		report_data_xml_width = 0;
@@ -272,9 +282,15 @@ function set_report_data_widths () {
 		document.getElementById('report_data_xml').style.display = 'none';
 		document.getElementById('report_data_table_div').style.display = 'block';
 		document.getElementById('report_data_table_div').style.float = '';
-		document.getElementById('xml_html_img').src = 'xml.png';
-		document.getElementById('xml_html_img').title = 'Show Raw Report XML';
-		document.getElementById('xml_html_img').alt = 'Show Raw Report XML';
+		if (report_type == 'dmarc') {
+			document.getElementById('xml_html_img').src = 'xml.png';
+			document.getElementById('xml_html_img').title = 'Show Raw Report XML';
+			document.getElementById('xml_html_img').alt = 'Show Raw Report XML';
+		} else {
+			document.getElementById('xml_html_img').src = 'json.png';
+			document.getElementById('xml_html_img').title = 'Show Raw Report JSON';
+			document.getElementById('xml_html_img').alt = 'Show Raw Report JSON';
+		}
 		document.getElementById('resizer_vertical').style.display = "none";
 	}
 
@@ -343,7 +359,11 @@ function showReport(str) {
 	}
 
 	GETstring += "&p=" + document.getElementById('selPeriod').value;
-	GETstring += "&dmarc=" + document.getElementById('selDMARC').options[document.getElementById('selDMARC').selectedIndex].value;
+	if ( report_type == 'dmarc' ){
+		GETstring += "&dmarc=" + document.getElementById('selDMARC').options[document.getElementById('selDMARC').selectedIndex].value;
+	} else if ( report_type == 'tls' ){
+
+	}
 
 	xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange =
@@ -367,7 +387,7 @@ function showReport(str) {
 			}
 		};
 
-	xhttp.open("GET", "dmarcts-report-viewer-report-data.php?" + GETstring, true);
+	xhttp.open("GET", report_type + "ts-report-viewer-report-data.php?" + GETstring, true);
 	xhttp.send();
 }
 
