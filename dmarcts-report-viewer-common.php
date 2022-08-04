@@ -348,6 +348,34 @@ function get_report_status($row) {
 	return array('color' => $color, 'status_sort_key' => $color_sort_key, 'status_text' => $status_text);
 }
 
+// This function sets variables for the TLS-RPT Result in the Report List
+function get_tls_result($row) {
+
+		global $tls_result;
+		$color = "";
+		$color_sort_key = "";
+		$result_text = "";
+
+		if (($row['summary_successful'] == 0) && ($row['summary_failure'] > 0)) {
+			$color     = $tls_result['TLS_FAIL']['color'];
+			$color_sort_key = $tls_result['TLS_FAIL']['status_sort_key'];
+			$result_text = $tls_result['TLS_FAIL']['text'];
+		} elseif (($row['summary_successful'] > 0) && ($row['summary_failure'] > 0)) {
+			$color     = $tls_result['TLS_PASS_AND_FAIL']['color'];
+			$color_sort_key = $tls_result['TLS_PASS_AND_FAIL']['status_sort_key'];
+			$result_text = $tls_result['TLS_PASS_AND_FAIL']['text'];
+		} elseif (($row['summary_successful'] > 0) && ($row['summary_failure'] == 0)) {
+			$color     = $tls_result['TLS_PASS']['color'];
+			$color_sort_key = $tls_result['TLS_PASS']['status_sort_key'];
+			$result_text = $tls_result['TLS_PASS']['text'];
+		} else {
+			$color     = $tls_result['TLS_OTHER_CONDITION']['color'];
+			$color_sort_key = $tls_result['TLS_OTHER_CONDITION']['status_sort_key'];
+			$result_text = $tls_result['TLS_OTHER_CONDITION']['text'];
+		}
+		return array('color' => $color, 'status_sort_key' => $color_sort_key, 'result' => $result_text);
+}
+
 // This function sets variables for individual cells in the Report Data table
 function get_status_color($result) {
 
