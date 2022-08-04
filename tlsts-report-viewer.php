@@ -105,20 +105,20 @@ function html ($domains = array(), $orgs = array(), $periods = array() ) {
 	// 	$html[] = "</div>";
 	//
 	//
-	// 	// 	Report Status select
-	// 	// 	--------------------------------------------------------------------------
-	// 		$html[] = "<div class='options'><span class='optionlabel'>Report Status:</span><br>";
-	// 		$html[] = "<select class='x-css' name=\"ReportStatus\" id=\"selReportStatus\" onchange=\"showReportlist('tls')\">";
-	// 		$html[] = "<option " . ( $cookie_options['ReportStatus'] ? "" : "selected=\"selected\" " ) . "value=\"all\">[all]</option>";
-	// 		foreach($dmarc_result as $key => $value) {
-	// 			$html[] = sprintf("<option class='color: " . $value['color'] . "' %s value=\"%s\">%s</option>",
-	// 					$cookie_options['ReportStatus'] == $key ? "selected=\"selected\"" : "",
-	// 					$key,
-	// 					$value['status_text']
-	// 				);
-	// 		}
-	// 		$html[] = "</select>";
-	// 		$html[] = "</div>";
+	// 	Report Status select
+	// 	--------------------------------------------------------------------------
+		$html[] = "<div class='options'><span class='optionlabel'>Report Status:</span><br>";
+		$html[] = "<select class='x-css' name=\"ReportStatus\" id=\"selReportStatus\" onchange=\"showReportlist('tls')\">";
+		$html[] = "<option " . ( $cookie_options['ReportStatus'] ? "" : "selected=\"selected\" " ) . "value=\"all\">[all]</option>";
+		foreach($tls_result as $key => $value) {
+			$html[] = sprintf("<option class='color: " . $value['color'] . "' %s value=\"%s\">%s</option>",
+					$cookie_options['ReportStatus'] == $key ? "selected=\"selected\"" : "",
+					$key,
+					$value['status_text']
+				);
+		}
+		$html[] = "</select>";
+		$html[] = "</div>";
 
 
 	// 	Period select
