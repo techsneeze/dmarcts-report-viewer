@@ -99,16 +99,16 @@ function showReportlist(report_type) { // str is the name of the <div> to be fil
 	var domain = document.getElementById('selDomain').options[document.getElementById('selDomain').selectedIndex].value;
 	var org = document.getElementById('selOrganisation').options[document.getElementById('selOrganisation').selectedIndex].value;
 	var period = document.getElementById('selPeriod').options[document.getElementById('selPeriod').selectedIndex].value;
+	var report_status = document.getElementById('selReportStatus').options[document.getElementById('selReportStatus').selectedIndex].value;
 
 	GETstring += "d=" + domain;
 	GETstring += "&o=" + org;
 	GETstring += "&p=" + period;
+	GETstring += "&rptstat=" + report_status;
 
 	if (report_type == "dmarc") {
 		var dmarc = document.getElementById('selDMARC').options[document.getElementById('selDMARC').selectedIndex].value;
-		var report_status = document.getElementById('selReportStatus').options[document.getElementById('selReportStatus').selectedIndex].value;
 		GETstring += "&dmarc=" + dmarc;
-		GETstring += "&rptstat=" + report_status;
 	} else if (report_type == "tls") {
 				// var tls = document.getElementById('selTLS').options[document.getElementById('selTLS').selectedIndex].value;
 	}

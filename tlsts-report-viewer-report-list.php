@@ -116,7 +116,7 @@ $dom_select= '';
 $org_select= '';
 $per_select= '';
 // $dmarc_select= '';
-// $report_status = '';
+$report_status = '';
 $where = '';
 
 // Parameters of GET
@@ -166,11 +166,11 @@ if( $per_select == "all" ) {
 // 	$dmarc_select= '';
 // }
 //
-// if(isset($_GET['rptstat'])){
-// 	$report_status = $_GET['rptstat'];
-// }else{
-// 	$report_status = '';
-// }
+if(isset($_GET['rptstat'])){
+	$report_status = $_GET['rptstat'];
+}else{
+	$report_status = '';
+}
 
 // Debug
 // echo "<br />D=$dom_select <br /> O=$org_select <br />";
@@ -218,9 +218,9 @@ if( $sortorder ) {
 
 // Report Status
 // --------------------------------------------------------------------------
-// if ( $report_status != "all" && $report_status != "" ) {
-// 	$where .= ( $where <> '' ? " AND" : " WHERE" ) . " " . $dmarc_result[$report_status]['status_sql_where'];
-// }
+if ( $report_status != "all" && $report_status != "" ) {
+	$where .= ( $where <> '' ? " AND" : " WHERE" ) . " " . $tls_result[$report_status]['status_sql_where'];
+}
 
 // Domains
 // --------------------------------------------------------------------------
