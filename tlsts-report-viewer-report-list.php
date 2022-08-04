@@ -57,9 +57,7 @@ function tmpl_reportList($reports, $sort) {
 		$reportlist[] = "    <tr>";
 
 		$triangle = ($cookie_options['sort'] ? "asc":"desc") . "_triangle ";
-		$reportlist[] = "      <th class='circle_container' style='padding-left: 5px' title='DMARC Result. " . $title_message_th . "'><div class='circle circle_left circle_black'></div><span style='display:none;'>1</span></span></th>";
-		$reportlist[] = "      <th class='circle_container'></th>";
-		$reportlist[] = "      <th class='circle_container' title='SPF/DKIM/DMARC Results. " . $title_message_th . "'><div class='circle circle_right circle_black'></div><span style='display:none;'>1</span></span></th>";
+		$reportlist[] = "      <th class='circle_container' style='padding-left: 5px' title='TLS-RPT Result. " . $title_message_th . "'><div class='circle_whole circle_black'></div><span style='display:none;'>1</span></span></th>";
 		$reportlist[] = "      <th id='mindate' class=\"" . ($cookie_options['sort_column'] == 'mindate' ? $triangle : "") . "\" title='" . $title_message_th . "'>Start Date</th>";
 		$reportlist[] = "      <th id='maxdate' class=\"" . ($cookie_options['sort_column'] == 'maxdate' ? $triangle : "") . "\" title='" . $title_message_th . "'>End Date</th>";
 		$reportlist[] = "      <th id='domain' class=\"" . ($cookie_options['sort_column'] == 'domain' ? $triangle : "") . "\" title='" . $title_message_th . "'>Domain</th>";
@@ -77,10 +75,8 @@ function tmpl_reportList($reports, $sort) {
 		foreach ($reports as $row) {
 			$row = array_map('htmlspecialchars', $row);
 			$reportlist[] =  "    <tr class='linkable' onclick=\"showReport('" . $row['serial'] . "')\" id='report" . $row['serial'] . "' title='" . $title_message_tr . "'>";
-
-			$reportlist[] =  "      <td class='circle_container'><span class='status_sort_key'>" . get_dmarc_result($row)['status_sort_key'] . "</span></td>"; // Col 0
-			$reportlist[] =  "      <td class='circle_container'><div style='white-space: nowrap;' title='DMARC: " . get_dmarc_result($row)['result'] . "\nSPF/DKIM/DMARC: " . get_report_status($row)['status_text'] . "\n" . $title_message_tr . "'><div class='circle circle_left circle_" . get_dmarc_result($row)['color'] . "'></div><div class='circle circle_right circle_" . get_report_status($row)['color'] . "'></div></div></td>"; // Col 0
-			$reportlist[] =  "      <td class='circle_container'><span class='status_sort_key'>" . get_report_status($row)['status_sort_key'] . "</span></span></td>"; // Col 0
+			$reportlist[] =  "      <td class='circle_container' style='padding-left: 5px;''><span class='status_sort_key'>" . get_tls_result($row)['status_sort_key'] . "</span><div title='TLS: " . get_tls_result($row)['result'] . "\n" . $title_message_tr . "'>
+			<div class='circle_whole circle_" . get_tls_result($row)['color'] . "'></div></div></td>"; // Col 0
 			$reportlist[] =  "      <td class='right'>". format_date($row['mindate'], $cookie_options['date_format']). "</td>";   // Col 1
 			$reportlist[] =  "      <td class='right'>". format_date($row['maxdate'], $cookie_options['date_format']). "</td>";   // Col 3
 			$reportlist[] =  "      <td class='center'>". $row['domain']. "</td>";                                     // Col 5
@@ -94,7 +90,7 @@ function tmpl_reportList($reports, $sort) {
 		}
 
 		$reportlist[] =  "  </tbody>";
-		$reportlist[] = "<tr class='sum'><td class='circle_container'></td><td class='circle_container'></td><td class='circle_container'></td><td></td><td></td><td></td><td></td><td class='right'>Sum:</td><td class='right'>".number_format($report_success_sum,0)."</td><td class='right'>".number_format($report_fail_sum,0)."</td></tr>";
+		$reportlist[] = "<tr class='sum'><td class='circle_container'></td><td class='circle_container'></td><td class='circle_container'></td><td></td><td></td><td class='right'>Sum:</td><td class='right'>".number_format($report_success_sum,0)."</td><td class='right'>".number_format($report_fail_sum,0)."</td></tr>";
 		$reportlist[] =  "</table>";
 
 		$reportlist[] = "<!-- End of report list -->";

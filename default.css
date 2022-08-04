@@ -418,6 +418,19 @@ form {
     display: inline-block;
 }
 
+.circle_whole {
+    border-bottom-right-radius: 500px;
+    border-top-right-radius: 500px;
+    border-bottom-left-radius: 500px;
+    border-top-left-radius: 500px;
+	 width: 14px;
+	 height: 14px;
+	 margin-top: 4px;
+	 margin-bottom: 2px;
+    /* border-right: 0; */
+    display: inline-block;
+}
+
 .circle_yellow {
     width: 6px;
     height: 12px;
