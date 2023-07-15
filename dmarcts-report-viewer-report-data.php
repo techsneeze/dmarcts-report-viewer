@@ -57,7 +57,11 @@ function tmpl_reportData($reportnumber, $reports, $host_lookup = 1) {
 		$row = $reports[$reportnumber];
 
 		$row['raw_xml'] = formatXML($row['raw_xml'], $reportnumber);
-		$row = array_map('html_escape', $row);
+		foreach ($row as $k => $v) {
+			if ($k !== 'raw_xml') {
+				$row[$k] = html_escape($v);
+			}
+		}
 
 		$reportdata[] = "<div id='report_desc_container' class='center reportdesc_container'>";
 		$reportdata[] = "<div id='report_desc' class='center reportdesc'  class='hilighted' onmouseover='highlight(this);' onmouseout='unhighlight(this);' onclick='pin(this)'>Report from ".$row['org']." for ".$row['domain']."<br>". format_date($row['mindate'], $cookie_options['date_format']). " to ".format_date($row['maxdate'], $cookie_options['date_format'])."<br> Policies: adkim=" . $row['policy_adkim'] . ", aspf=" . $row['policy_aspf'] .  ", p=" . $row['policy_p'] .  ", sp=" . $row['policy_sp'] .  ", pct=" . $row['policy_pct'] . "</div>";
