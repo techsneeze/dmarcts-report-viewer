@@ -142,7 +142,7 @@ ORDER BY
 	$query = $dbh->query($sql);
 	foreach($query as $row) {
 		if ( $row['ip'] ) {
-			$ip = long2ip($row['ip']);
+			$ip = long2ip(intval$row['ip']);
 		} elseif ( $row['ip6'] ) {
 			if ( $dbtype == 'pgsql') {
 				$row['ip6'] = stream_get_contents($row['ip6']);
